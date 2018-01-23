@@ -31,7 +31,8 @@ namespace G1ANT.Addon.Images.Tests
         {
             int expectedRectanglesCount = 8;
             string imageWithRectanglesPath = Assembly.GetExecutingAssembly().UnpackResourceToFile(nameof(Resources.Rectangles8), "png");
-            scripter.RunLine($"image.findrectangles {SpecialChars.Text}{imageWithRectanglesPath}{SpecialChars.Text}");
+            scripter.Text = ($"image.findrectangles {SpecialChars.Text}{imageWithRectanglesPath}{SpecialChars.Text}");
+            scripter.Run();
             Assert.AreEqual(expectedRectanglesCount, scripter.Variables.GetVariableValue<List<Object>>("result").Count);
         }
 
@@ -40,16 +41,15 @@ namespace G1ANT.Addon.Images.Tests
         {
             int widthTreshold = 180*100/1900;
             int expectedRectanglesCount = 2;
+            int expectedRectanglesCount2 = 6;
+            string imageWithRectanglesPath2 = Assembly.GetExecutingAssembly().UnpackResourceToFile(nameof(Resources.Rectangles8), "png");
             string imageWithRectanglesPath = Assembly.GetExecutingAssembly().UnpackResourceToFile(nameof(Resources.Rectangles8), "png");
 
-            scripter.RunLine($"image.findrectangles {SpecialChars.Text}{imageWithRectanglesPath}{SpecialChars.Text} maxwidth {widthTreshold}");
+            scripter.Text = ($@"image.findrectangles {SpecialChars.Text}{imageWithRectanglesPath}{SpecialChars.Text} maxwidth {widthTreshold}
+                                image.findrectangles {SpecialChars.Text}{imageWithRectanglesPath2}{SpecialChars.Text} minwidth {widthTreshold} result {SpecialChars.Variable} result2");
+            scripter.Run();
             Assert.AreEqual(expectedRectanglesCount, scripter.Variables.GetVariableValue<List<Object>>("result").Count);
-
-            imageWithRectanglesPath = Assembly.GetExecutingAssembly().UnpackResourceToFile(nameof(Resources.Rectangles8), "png");
-
-            expectedRectanglesCount = 6;
-            scripter.RunLine($"image.findrectangles {SpecialChars.Text}{imageWithRectanglesPath}{SpecialChars.Text} minwidth {widthTreshold}");
-            Assert.AreEqual(expectedRectanglesCount, scripter.Variables.GetVariableValue<List<Object>>("result").Count);
+            Assert.AreEqual(expectedRectanglesCount2, scripter.Variables.GetVariableValue<List<Object>>("result2").Count);
         }
 
         [Test, Timeout(ImagesTests.TestsTimeout)]

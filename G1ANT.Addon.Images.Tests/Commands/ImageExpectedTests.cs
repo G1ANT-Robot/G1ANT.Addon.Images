@@ -69,16 +69,17 @@ scripter.InitVariables.Clear();
 
             Scripter scripter = new Scripter();
 scripter.InitVariables.Clear();
-            scripter.RunLine("window TestApp");
-           scripter.InitVariables.Add(nameof(colorCode), new TextStructure(colorCode));
-            scripter.Text = $@"keyboard {TextChar}FocusOnControl tbColorRGB{TextChar}
+            string image1 = Assembly.GetExecutingAssembly().UnpackResourceToFile(nameof(Resources.FFF0F8FF), "bmp");
+            scripter.InitVariables.Add(nameof(colorCode), new TextStructure(colorCode));
+            scripter.Text = $@"image.expected image1 {SpecialChars.Text}{image1}{SpecialChars.Text}
+                            window TestApp
+                            keyboard {TextChar}FocusOnControl tbColorRGB{TextChar}
 				            keyboard {SpecialChars.KeyBegin}enter{SpecialChars.KeyEnd}
                             keyboard {TextChar}{SpecialChars.Variable}{nameof(colorCode)}{TextChar} 
                             keyboard {SpecialChars.KeyBegin}enter{SpecialChars.KeyEnd}";
             scripter.Run();
 
-            string image1 = Assembly.GetExecutingAssembly().UnpackResourceToFile(nameof(Resources.FFF0F8FF), "bmp");
-            scripter.RunLine($"image.expected image1 {SpecialChars.Text}{image1}{SpecialChars.Text}");
+            
             var result = scripter.Variables.GetVariableValue<bool>("result");
             Assert.IsTrue(result);           
         }

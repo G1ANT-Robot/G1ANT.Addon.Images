@@ -1,4 +1,13 @@
-﻿using AForge.Imaging.Filters;
+﻿/**
+*    Copyright(C) G1ANT Ltd, All rights reserved
+*    Solution G1ANT.Addon, Project G1ANT.Addon.Images
+*    www.g1ant.com
+*
+*    Licensed under the G1ANT license.
+*    See License.txt file in the project root for full license information.
+*
+*/
+using AForge.Imaging.Filters;
 using AForge.Imaging;
 using System;
 using System.Collections.Generic;

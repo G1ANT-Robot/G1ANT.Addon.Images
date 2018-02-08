@@ -57,8 +57,8 @@ scripter.InitVariables.Clear();
         [Test, Timeout(ImagesTests.TestsTimeout)]
         public void ExpectImageInImagesTest()
         {
-            string image1 = Assembly.GetExecutingAssembly().UnpackResourceToFile(nameof(Resources.greenRectangle), "bmp");
-            string image2 = Assembly.GetExecutingAssembly().UnpackResourceToFile(nameof(Resources.greenInRed), "bmp");
+            string image1 = Assembly.GetExecutingAssembly().UnpackResourceToFile("Resources." + nameof(Resources.greenRectangle), "bmp");
+            string image2 = Assembly.GetExecutingAssembly().UnpackResourceToFile("Resources." + nameof(Resources.greenInRed), "bmp");
 
             Scripter scripter = new Scripter();
 scripter.InitVariables.Clear();
@@ -78,7 +78,7 @@ scripter.InitVariables.Clear();
 
             Scripter scripter = new Scripter();
 scripter.InitVariables.Clear();
-            string image1 = Assembly.GetExecutingAssembly().UnpackResourceToFile(nameof(Resources.FFF0F8FF), "bmp");
+            string image1 = Assembly.GetExecutingAssembly().UnpackResourceToFile("Resources." + nameof(Resources.FFF0F8FF), "bmp");
             scripter.InitVariables.Add(nameof(colorCode), new TextStructure(colorCode));
             scripter.Text = $@"image.expected image1 {SpecialChars.Text}{image1}{SpecialChars.Text}
                             window TestApp
@@ -96,7 +96,7 @@ scripter.InitVariables.Clear();
         [Test, Timeout(ImagesTests.TestsTimeout)]
         public void BadThresholdValueTest()
         {
-            string image = Assembly.GetExecutingAssembly().UnpackResourceToFile(nameof(Resources.blackRectangle), "bmp");
+            string image = Assembly.GetExecutingAssembly().UnpackResourceToFile("Resources." + nameof(Resources.blackRectangle), "bmp");
             paths.Add(image);
 
             Scripter scripter = new Scripter();

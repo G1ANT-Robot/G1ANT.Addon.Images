@@ -78,7 +78,7 @@ namespace G1ANT.Addon.Images.Tests
 
             scripter.Run();
 
-            string path1 = Assembly.GetExecutingAssembly().UnpackResourceToFile(nameof(Resources.littleGrayRectangle), "bmp");
+            string path1 = Assembly.GetExecutingAssembly().UnpackResourceToFile("Resources." + nameof(Resources.littleGrayRectangle), "bmp");
 
             scripter.RunLine($"waitfor.image image {SpecialChars.Text}{path1}{SpecialChars.Text}");
         }
@@ -89,7 +89,7 @@ namespace G1ANT.Addon.Images.Tests
             Color color = Color.Pink;
             string colorCode = "FFFFC0CB";
 
-            string path = Assembly.GetExecutingAssembly().UnpackResourceToFile(nameof(Resources.smallPink), "bmp");
+            string path = Assembly.GetExecutingAssembly().UnpackResourceToFile("Resources." + nameof(Resources.smallPink), "bmp");
 
             Scripter scripter = new Scripter();
 
@@ -103,7 +103,7 @@ namespace G1ANT.Addon.Images.Tests
         [Test, Timeout(ImagesTests.TestsTimeout)]
         public void WaitForNotExistingImageTest()
         {
-            string path = Assembly.GetExecutingAssembly().UnpackResourceToFile(nameof(Resources.purpleInYellow), "bmp");
+            string path = Assembly.GetExecutingAssembly().UnpackResourceToFile("Resources." + nameof(Resources.purpleInYellow), "bmp");
 
             Scripter scripter = new Scripter();
 
@@ -117,7 +117,7 @@ namespace G1ANT.Addon.Images.Tests
         [Test, Timeout(ImagesTests.TestsTimeout)]
         public void BadThresholdValueTest()
         {
-            string image = Assembly.GetExecutingAssembly().UnpackResourceToFile(nameof(Resources.smallBlack), "bmp");
+            string image = Assembly.GetExecutingAssembly().UnpackResourceToFile("Resources." + nameof(Resources.smallBlack), "bmp");
             Scripter scripter = new Scripter();
             scripter.Text = $"waitfor.image image {SpecialChars.Text}{image}{SpecialChars.Text} threshold 54";
             Exception exception = Assert.Throws<ApplicationException>(delegate

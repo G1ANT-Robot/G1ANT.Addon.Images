@@ -18,6 +18,8 @@ namespace G1ANT.Addon.Images
 {
     [Addon(Name = "Images",
         Tooltip = "images Commands")]
+    [Copyright(Author = "G1ANT LTD", Copyright = "G1ANT LTD", Email = "hi@g1ant.com", Website = "www.g1ant.com")]
+    [License(Type = "LGPL", ResourceName = "License.txt")]
     [CommandGroup(Name = "image", Tooltip = "Command connected with creating, editing and generally working on images")]
     [CommandGroup(Name = "waitfor", Tooltip = "Command connected with creating, editing and generally working on images")]
     public class ImagesAddon : Language.Addon

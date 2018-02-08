@@ -62,8 +62,8 @@ scripter.InitVariables.Clear();
             int size = 20;
             Point offset = new Point(3, 11);
 
-            string image1 = Assembly.GetExecutingAssembly().UnpackResourceToFile(nameof(Resources.greenRectangle), "bmp");
-            string image2 = Assembly.GetExecutingAssembly().UnpackResourceToFile(nameof(Resources.greenInRed), "bmp");
+            string image1 = Assembly.GetExecutingAssembly().UnpackResourceToFile("Resources." + nameof(Resources.greenRectangle), "bmp");
+            string image2 = Assembly.GetExecutingAssembly().UnpackResourceToFile("Resources." + nameof(Resources.greenInRed), "bmp");
 
             Scripter scripter = new Scripter();
 scripter.InitVariables.Clear();
@@ -81,8 +81,8 @@ scripter.InitVariables.Clear();
         public void FindImageInImageWithThresholdTest()
         {
             Color color2 = Color.FromArgb(0, 20, 255);
-            string image1 = Assembly.GetExecutingAssembly().UnpackResourceToFile(nameof(Resources.greenRectangle), "bmp");
-            string image2 = Assembly.GetExecutingAssembly().UnpackResourceToFile(nameof(Resources.greenInRed), "bmp");
+            string image1 = Assembly.GetExecutingAssembly().UnpackResourceToFile("Resources." + nameof(Resources.greenRectangle), "bmp");
+            string image2 = Assembly.GetExecutingAssembly().UnpackResourceToFile("Resources." + nameof(Resources.greenInRed), "bmp");
             paths.Add(image1);
             paths.Add(image2);
 
@@ -96,8 +96,8 @@ scripter.InitVariables.Clear();
         [Test, Timeout(ImagesTests.TestsTimeout)]
         public void FindImageInDifferentImageTest()
         {
-            string image1 = Assembly.GetExecutingAssembly().UnpackResourceToFile(nameof(Resources.greenRectangle), "bmp");
-            string image2 = Assembly.GetExecutingAssembly().UnpackResourceToFile(nameof(Resources.blackRectangle), "bmp");
+            string image1 = Assembly.GetExecutingAssembly().UnpackResourceToFile("Resources." + nameof(Resources.greenRectangle), "bmp");
+            string image2 = Assembly.GetExecutingAssembly().UnpackResourceToFile("Resources." + nameof(Resources.blackRectangle), "bmp");
             paths.Add(image1);
             paths.Add(image2);
 
@@ -117,7 +117,7 @@ scripter.InitVariables.Clear();
         {
             string colorCode = "00000000";
 
-            string image = Assembly.GetExecutingAssembly().UnpackResourceToFile(nameof(Resources.littleWhite), "bmp");
+            string image = Assembly.GetExecutingAssembly().UnpackResourceToFile("Resources." + nameof(Resources.littleWhite), "bmp");
             
             testerApp = SDK.Tester.RunFormTester("Title TestApp");
             
@@ -140,7 +140,7 @@ scripter.InitVariables.Clear();
         [Test, Timeout(ImagesTests.TestsTimeout)]
         public void BadThresholdValueTest()
         {
-            string image = Assembly.GetExecutingAssembly().UnpackResourceToFile(nameof(Resources.greenRectangle), "bmp");
+            string image = Assembly.GetExecutingAssembly().UnpackResourceToFile("Resources." + nameof(Resources.greenRectangle), "bmp");
             paths.Add(image);
 
             Scripter scripter = new Scripter();

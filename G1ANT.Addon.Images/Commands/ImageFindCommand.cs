@@ -47,7 +47,8 @@ namespace G1ANT.Language.Images
             [Argument]
             public VariableStructure Result { get; set; } = new VariableStructure("result");
 
-             
+            [Argument(Required = true, DefaultVariable = "timeoutimagefind")]
+            public override TimeSpanStructure Timeout { get; set; }
         }
         public ImageFindCommand(AbstractScripter scripter) : base(scripter)
         { }

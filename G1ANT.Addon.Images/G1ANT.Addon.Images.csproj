@@ -65,6 +65,8 @@
     <Compile Include="Commands\ImageSharpenCommand.cs" />
     <Compile Include="Commands\ImageFindCommand.cs" />
     <Compile Include="Commands\ImageFindRectanglesCommand.cs" />
+    <Compile Include="Variables\TimeoutImageExpectedVariable.cs" />
+    <Compile Include="Variables\TimeoutImageFindVariable.cs" />
     <Compile Include="Commands\WaitForImageCommand.cs" />
     <Compile Include="ImagesAddon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

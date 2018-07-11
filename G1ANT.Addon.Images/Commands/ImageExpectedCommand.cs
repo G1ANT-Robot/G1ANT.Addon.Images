@@ -38,7 +38,10 @@ namespace G1ANT.Language.Images
             [Argument]
             public VariableStructure Result { get; set; } = new VariableStructure("result");
 
-             
+            [Argument(Required = true, DefaultVariable = "timeoutimageexpected")]
+            public override TimeSpanStructure Timeout { get; set; }
+
+
         }
         public ImageExpectedCommand(AbstractScripter scripter) : base(scripter)
         { }

@@ -9,7 +9,7 @@ namespace G1ANT.Addon.Core
 {
     [Variable(
         Name = "timeoutimagefind",
-        Tooltip = "")]
+        Tooltip = "Determines the timeout value for the image.find command; the default value is 60000 ms.")]
     public class TimeoutImageFindVariable : Variable
     {
         private TimeSpanStructure value;

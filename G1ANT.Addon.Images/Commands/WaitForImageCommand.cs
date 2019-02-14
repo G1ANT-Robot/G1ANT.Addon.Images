@@ -31,7 +31,7 @@ namespace G1ANT.Language.Images
             public FloatStructure Threshold { get; set; } = new FloatStructure(0);
 
             [Argument(Tooltip = "Argument narrowing search area. Specifying can speed up the search.")]
-            public RectangleStructure ScreenSearchArea { get; set; } = new RectangleStructure(SystemInformation.VirtualScreen);
+            public RectangleStructure ScreenSearchArea { get; set; } = new RectangleStructure(new Rectangle(0,0,SystemInformation.VirtualScreen.Width, SystemInformation.VirtualScreen.Height));
 
             [Argument(Tooltip = "If specified, result point will be pointing at the middle of the found area.")]
             public BooleanStructure CenterResult { get; set; } = new BooleanStructure(true);

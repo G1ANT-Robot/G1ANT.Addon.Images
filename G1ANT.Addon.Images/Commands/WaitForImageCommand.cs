@@ -16,7 +16,7 @@ using G1ANT.Language.Images;
 namespace G1ANT.Language.Images
 {
 
-    [Command(Name = "waitfor.image", Tooltip = "This command allows to wait for specified image in current screen view.", IsUnderConstruction = true)]
+    [Command(Name = "waitfor.image", Tooltip = "This command allows to wait for specified image in current screen view.")]
     public class WaitForImageCommand : Command
     {
         public class Arguments : CommandArguments

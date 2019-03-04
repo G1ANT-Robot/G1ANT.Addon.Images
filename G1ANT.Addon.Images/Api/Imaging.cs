@@ -77,7 +77,7 @@ namespace G1ANT.Language.Images
             var resultCollection = new ConcurrentBag<Point>();
             ParallelLoopResult result = Parallel.ForEach<Point>(firstLineMatchPointsList, (firstLineMatchPoint) =>
             {
-                if (IsNeedlePresentAtLocation(haystackArray, needleArray, firstLineMatchPoint, 1, tolerance))
+                if (IsNeedlePresentAtLocation(haystackArray, needleArray, firstLineMatchPoint, 1, margin))
                 {
                     resultCollection.Add(firstLineMatchPoint);
                 }

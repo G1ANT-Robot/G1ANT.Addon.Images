@@ -7,12 +7,17 @@
 *    See License.txt file in the project root for full license information.
 *
 */
+
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Threading.Tasks;
+using System.Threading;
+using System.Collections.Concurrent;
 
 namespace G1ANT.Language.Images
 {
@@ -46,97 +51,114 @@ namespace G1ANT.Language.Images
 
         public static Rectangle IsImageInImage(Bitmap smallBmp, Bitmap bigBmp, double tolerance)
         {
-            BitmapData smallData =
-              smallBmp.LockBits(new Rectangle(0, 0, smallBmp.Width, smallBmp.Height),
-                       System.Drawing.Imaging.ImageLockMode.ReadOnly,
-                       System.Drawing.Imaging.PixelFormat.Format24bppRgb);
-            BitmapData bigData =
-              bigBmp.LockBits(new Rectangle(0, 0, bigBmp.Width, bigBmp.Height),
-                       System.Drawing.Imaging.ImageLockMode.ReadOnly,
-                       System.Drawing.Imaging.PixelFormat.Format24bppRgb);
+            Rectangle rectangleResult = FindImage(smallBmp, bigBmp, tolerance);
+            if (rectangleResult != Rectangle.Empty) { return rectangleResult; }
+            else { return Rectangle.Empty; }
+        }
 
-            int smallStride = smallData.Stride;
-            int bigStride = bigData.Stride;
-
-            int bigWidth = bigBmp.Width;
-            int bigHeight = bigBmp.Height - smallBmp.Height + 1;
-            int smallWidth = smallBmp.Width * 3;
-            int smallHeight = smallBmp.Height;
-
+        private static Rectangle FindImage(Bitmap needle, Bitmap haystack, double tolerance)
+        {
             Rectangle location = Rectangle.Empty;
             int margin = Convert.ToInt32(255.0 * tolerance);
 
-            unsafe
+            if (null == haystack || null == needle)
             {
-                byte* pSmall = (byte*)(void*)smallData.Scan0;
-                byte* pBig = (byte*)(void*)bigData.Scan0;
-
-                int smallOffset = smallStride - smallBmp.Width * 3;
-                int bigOffset = bigStride - bigBmp.Width * 3;
-
-                bool matchFound = true;
-
-                for (int y = 0; y < bigHeight; y++)
-                {
-                    for (int x = 0; x < bigWidth; x++)
-                    {
-                        byte* pBigBackup = pBig;
-                        byte* pSmallBackup = pSmall;
-
-                        for (int i = 0; i < smallHeight; i++)
-                        {
-                            int j = 0;
-                            matchFound = true;
-                            for (j = 0; j < smallWidth; j++)
-                            {
-
-                                int inf = pBig[0] - margin;
-                                int sup = pBig[0] + margin;
-                                if (sup < pSmall[0] || inf > pSmall[0])
-                                {
-                                    matchFound = false;
-                                    break;
-                                }
-
-                                pBig++;
-                                pSmall++;
-                            }
-
-                            if (!matchFound) break;
-
-                            pSmall = pSmallBackup;
-                            pBig = pBigBackup;
-
-                            pSmall += smallStride * (1 + i);
-                            pBig += bigStride * (1 + i);
-                        }
-
-                        if (matchFound)
-                        {
-                            location.X = x;
-                            location.Y = y;
-                            location.Width = smallBmp.Width;
-                            location.Height = smallBmp.Height;
-                            break;
-                        }
-                        else
-                        {
-                            pBig = pBigBackup;
-                            pSmall = pSmallBackup;
-                            pBig += 3;
-                        }
-                    }
-
-                    if (matchFound) break;
-
-                    pBig += bigOffset;
-                }
+                return location;
+            }
+            if (haystack.Width < needle.Width || haystack.Height < needle.Height)
+            {
+                return location;
             }
 
-            bigBmp.UnlockBits(bigData);
-            smallBmp.UnlockBits(smallData);
+            var haystackArray = GetPixelArray(haystack);
+            var needleArray = GetPixelArray(needle);
+            var firstLineMatchPointsList = FindMatch(haystackArray.Take(haystack.Height - needle.Height), needleArray[0], margin);
 
-            return location;
+            var resultCollection = new ConcurrentBag<Point>();
+            ParallelLoopResult result = Parallel.ForEach<Point>(firstLineMatchPointsList, (firstLineMatchPoint) =>
+            {
+                if (IsNeedlePresentAtLocation(haystackArray, needleArray, firstLineMatchPoint, 1, tolerance))
+                {
+                    resultCollection.Add(firstLineMatchPoint);
+                }
+            });
+
+            if (resultCollection.Count() > 0)
+            {
+                var rectangle = resultCollection.FirstOrDefault();
+                return new Rectangle(rectangle.X, rectangle.Y, needle.Width, needle.Height);
+            }
+            else return Rectangle.Empty;
+        }
+
+        private static int[][] GetPixelArray(Bitmap bitmap)
+        {
+            var result = new int[bitmap.Height][];
+            var bitmapData = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly,
+                PixelFormat.Format32bppArgb);
+
+            for (int y = 0; y < bitmap.Height; ++y)
+            {
+                result[y] = new int[bitmap.Width];
+                Marshal.Copy(bitmapData.Scan0 + y * bitmapData.Stride, result[y], 0, result[y].Length);
+            }
+
+            bitmap.UnlockBits(bitmapData);
+
+            return result;
+        }
+
+        private static IEnumerable<Point> FindMatch(IEnumerable<int[]> haystackLines, int[] needleLine, double tolerance)
+        {
+            var y = 0;
+            foreach (var haystackLine in haystackLines)
+            {
+                for (int x = 0, n = haystackLine.Length - needleLine.Length; x < n; ++x)
+                {
+                    if (ContainSameElements(haystackLine, x, needleLine, 0, needleLine.Length, tolerance))
+                    {
+                        yield return new Point(x, y);
+                    }
+                }
+                y += 1;
+            }
+        }
+
+        private static bool ContainSameElements(int[] first, int firstStart, int[] second, int secondStart, int length, double tolerance)
+        {
+            if (tolerance > 0)
+            {
+                for (int i = 0; i < second.Length; ++i)
+                {
+                    if (first[i + firstStart] - tolerance > second[i + secondStart] || first[i + firstStart] + tolerance < second[i + secondStart])
+                    {
+                        return false;
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < second.Length; ++i)
+                {
+                    if (first[i + firstStart] != second[i + secondStart])
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        private static bool IsNeedlePresentAtLocation(int[][] haystack, int[][] needle, Point point, int alreadyVerified, double tolerance)
+        {
+            for (int y = alreadyVerified; y < needle.Length; ++y)
+            {
+                if (!ContainSameElements(haystack[y + point.Y], point.X, needle[y], 0, needle.Length, tolerance))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         public static Bitmap ApplyMatrixTransform(Bitmap b, int factor, int size, int[,] matrix)

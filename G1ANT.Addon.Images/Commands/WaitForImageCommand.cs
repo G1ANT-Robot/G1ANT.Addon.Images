@@ -64,8 +64,7 @@ namespace G1ANT.Language.Images
                 long start = Environment.TickCount;
                 Rectangle foundRectangle = Rectangle.Empty;
                 while (Math.Abs(Environment.TickCount - start) < timeout && Scripter.Stopped == false && foundRectangle == Rectangle.Empty)
-                    while (Math.Abs(Environment.TickCount - start) < timeout && foundRectangle == Rectangle.Empty)
-                    {
+                {
                     using (
                     Bitmap bitmap2 = RobotWin32.GetPartOfScreen(
                         Imaging.ParseRectanglePositionFromArguments(arguments.ScreenSearchArea.Value, arguments.Relative.Value),

@@ -49,33 +49,19 @@ namespace G1ANT.Language.Images
             return true;
         }
 
-        public static Rectangle IsImageInImage(Bitmap smallBmp, Bitmap bigBmp, double tolerance)
+        public static Rectangle IsImageInImage(Bitmap needle, Bitmap haystack, double tolerance)
         {
-            Rectangle rectangleResult = FindImage(smallBmp, bigBmp, tolerance);
-            if (rectangleResult != Rectangle.Empty) { return rectangleResult; }
-            else { return Rectangle.Empty; }
-        }
-
-        private static Rectangle FindImage(Bitmap needle, Bitmap haystack, double tolerance)
-        {
-            Rectangle location = Rectangle.Empty;
+            var location = Rectangle.Empty;
             int margin = Convert.ToInt32(255.0 * tolerance);
 
-            if (null == haystack || null == needle)
-            {
-                return location;
-            }
-            if (haystack.Width < needle.Width || haystack.Height < needle.Height)
-            {
-                return location;
-            }
+            if (!IsCorrectNeedleAndHaystackProperties(needle, haystack)) { return location; }
 
             var haystackArray = GetPixelArray(haystack);
             var needleArray = GetPixelArray(needle);
             var firstLineMatchPointsList = FindMatch(haystackArray.Take(haystack.Height - needle.Height), needleArray[0], margin);
 
             var resultCollection = new ConcurrentBag<Point>();
-            ParallelLoopResult result = Parallel.ForEach<Point>(firstLineMatchPointsList, (firstLineMatchPoint) =>
+            Parallel.ForEach(firstLineMatchPointsList, (firstLineMatchPoint) =>
             {
                 if (IsNeedlePresentAtLocation(haystackArray, needleArray, firstLineMatchPoint, 1, margin))
                 {
@@ -83,12 +69,17 @@ namespace G1ANT.Language.Images
                 }
             });
 
-            if (resultCollection.Count() > 0)
+            if (resultCollection.Any())
             {
                 var rectangle = resultCollection.FirstOrDefault();
                 return new Rectangle(rectangle.X, rectangle.Y, needle.Width, needle.Height);
             }
             else return Rectangle.Empty;
+        }
+
+        private static bool IsCorrectNeedleAndHaystackProperties(Bitmap needle, Bitmap haystack)
+        {
+            return haystack != null && needle != null && haystack.Width >= needle.Width && haystack.Height >= needle.Height;
         }
 
         private static int[][] GetPixelArray(Bitmap bitmap)
@@ -115,7 +106,7 @@ namespace G1ANT.Language.Images
             {
                 for (int x = 0, n = haystackLine.Length - needleLine.Length; x < n; ++x)
                 {
-                    if (ContainSameElements(haystackLine, x, needleLine, 0, needleLine.Length, tolerance))
+                    if (ContainSameElements(haystackLine, x, needleLine, 0, tolerance))
                     {
                         yield return new Point(x, y);
                     }
@@ -124,7 +115,7 @@ namespace G1ANT.Language.Images
             }
         }
 
-        private static bool ContainSameElements(int[] first, int firstStart, int[] second, int secondStart, int length, double tolerance)
+        private static bool ContainSameElements(int[] first, int firstStart, int[] second, int secondStart, double tolerance)
         {
             if (tolerance > 0)
             {
@@ -153,7 +144,7 @@ namespace G1ANT.Language.Images
         {
             for (int y = alreadyVerified; y < needle.Length; ++y)
             {
-                if (!ContainSameElements(haystack[y + point.Y], point.X, needle[y], 0, needle.Length, tolerance))
+                if (!ContainSameElements(haystack[y + point.Y], point.X, needle[y], 0, tolerance))
                 {
                     return false;
                 }

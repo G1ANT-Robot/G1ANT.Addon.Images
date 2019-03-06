@@ -7,12 +7,17 @@
 *    See License.txt file in the project root for full license information.
 *
 */
+
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Threading.Tasks;
+using System.Threading;
+using System.Collections.Concurrent;
 
 namespace G1ANT.Language.Images
 {
@@ -44,99 +49,107 @@ namespace G1ANT.Language.Images
             return true;
         }
 
-        public static Rectangle IsImageInImage(Bitmap smallBmp, Bitmap bigBmp, double tolerance)
+        public static Rectangle IsImageInImage(Bitmap needle, Bitmap haystack, double tolerance)
         {
-            BitmapData smallData =
-              smallBmp.LockBits(new Rectangle(0, 0, smallBmp.Width, smallBmp.Height),
-                       System.Drawing.Imaging.ImageLockMode.ReadOnly,
-                       System.Drawing.Imaging.PixelFormat.Format24bppRgb);
-            BitmapData bigData =
-              bigBmp.LockBits(new Rectangle(0, 0, bigBmp.Width, bigBmp.Height),
-                       System.Drawing.Imaging.ImageLockMode.ReadOnly,
-                       System.Drawing.Imaging.PixelFormat.Format24bppRgb);
-
-            int smallStride = smallData.Stride;
-            int bigStride = bigData.Stride;
-
-            int bigWidth = bigBmp.Width;
-            int bigHeight = bigBmp.Height - smallBmp.Height + 1;
-            int smallWidth = smallBmp.Width * 3;
-            int smallHeight = smallBmp.Height;
-
-            Rectangle location = Rectangle.Empty;
+            var location = Rectangle.Empty;
             int margin = Convert.ToInt32(255.0 * tolerance);
 
-            unsafe
+            if (!IsCorrectNeedleAndHaystackProperties(needle, haystack)) { return location; }
+
+            var haystackArray = GetPixelArray(haystack);
+            var needleArray = GetPixelArray(needle);
+            var firstLineMatchPointsList = FindMatch(haystackArray.Take(haystack.Height - needle.Height), needleArray[0], margin);
+
+            var resultCollection = new ConcurrentBag<Point>();
+            Parallel.ForEach(firstLineMatchPointsList, (firstLineMatchPoint) =>
             {
-                byte* pSmall = (byte*)(void*)smallData.Scan0;
-                byte* pBig = (byte*)(void*)bigData.Scan0;
-
-                int smallOffset = smallStride - smallBmp.Width * 3;
-                int bigOffset = bigStride - bigBmp.Width * 3;
-
-                bool matchFound = true;
-
-                for (int y = 0; y < bigHeight; y++)
+                if (IsNeedlePresentAtLocation(haystackArray, needleArray, firstLineMatchPoint, 1, margin))
                 {
-                    for (int x = 0; x < bigWidth; x++)
-                    {
-                        byte* pBigBackup = pBig;
-                        byte* pSmallBackup = pSmall;
-
-                        for (int i = 0; i < smallHeight; i++)
-                        {
-                            int j = 0;
-                            matchFound = true;
-                            for (j = 0; j < smallWidth; j++)
-                            {
-
-                                int inf = pBig[0] - margin;
-                                int sup = pBig[0] + margin;
-                                if (sup < pSmall[0] || inf > pSmall[0])
-                                {
-                                    matchFound = false;
-                                    break;
-                                }
-
-                                pBig++;
-                                pSmall++;
-                            }
-
-                            if (!matchFound) break;
-
-                            pSmall = pSmallBackup;
-                            pBig = pBigBackup;
-
-                            pSmall += smallStride * (1 + i);
-                            pBig += bigStride * (1 + i);
-                        }
-
-                        if (matchFound)
-                        {
-                            location.X = x;
-                            location.Y = y;
-                            location.Width = smallBmp.Width;
-                            location.Height = smallBmp.Height;
-                            break;
-                        }
-                        else
-                        {
-                            pBig = pBigBackup;
-                            pSmall = pSmallBackup;
-                            pBig += 3;
-                        }
-                    }
-
-                    if (matchFound) break;
-
-                    pBig += bigOffset;
+                    resultCollection.Add(firstLineMatchPoint);
                 }
+            });
+
+            if (resultCollection.Any())
+            {
+                var rectangle = resultCollection.FirstOrDefault();
+                return new Rectangle(rectangle.X, rectangle.Y, needle.Width, needle.Height);
+            }
+            else return Rectangle.Empty;
+        }
+
+        private static bool IsCorrectNeedleAndHaystackProperties(Bitmap needle, Bitmap haystack)
+        {
+            return haystack != null && needle != null && haystack.Width >= needle.Width && haystack.Height >= needle.Height;
+        }
+
+        private static int[][] GetPixelArray(Bitmap bitmap)
+        {
+            var result = new int[bitmap.Height][];
+            var bitmapData = bitmap.LockBits(new Rectangle(0, 0, bitmap.Width, bitmap.Height), ImageLockMode.ReadOnly,
+                PixelFormat.Format32bppArgb);
+
+            for (int y = 0; y < bitmap.Height; ++y)
+            {
+                result[y] = new int[bitmap.Width];
+                Marshal.Copy(bitmapData.Scan0 + y * bitmapData.Stride, result[y], 0, result[y].Length);
             }
 
-            bigBmp.UnlockBits(bigData);
-            smallBmp.UnlockBits(smallData);
+            bitmap.UnlockBits(bitmapData);
 
-            return location;
+            return result;
+        }
+
+        private static IEnumerable<Point> FindMatch(IEnumerable<int[]> haystackLines, int[] needleLine, double tolerance)
+        {
+            var y = 0;
+            foreach (var haystackLine in haystackLines)
+            {
+                for (int x = 0, n = haystackLine.Length - needleLine.Length; x < n; ++x)
+                {
+                    if (ContainSameElements(haystackLine, x, needleLine, 0, tolerance))
+                    {
+                        yield return new Point(x, y);
+                    }
+                }
+                y += 1;
+            }
+        }
+
+        private static bool ContainSameElements(int[] first, int firstStart, int[] second, int secondStart, double tolerance)
+        {
+            if (tolerance > 0)
+            {
+                for (int i = 0; i < second.Length; ++i)
+                {
+                    if (first[i + firstStart] - tolerance > second[i + secondStart] || first[i + firstStart] + tolerance < second[i + secondStart])
+                    {
+                        return false;
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < second.Length; ++i)
+                {
+                    if (first[i + firstStart] != second[i + secondStart])
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        private static bool IsNeedlePresentAtLocation(int[][] haystack, int[][] needle, Point point, int alreadyVerified, double tolerance)
+        {
+            for (int y = alreadyVerified; y < needle.Length; ++y)
+            {
+                if (!ContainSameElements(haystack[y + point.Y], point.X, needle[y], 0, tolerance))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         public static Bitmap ApplyMatrixTransform(Bitmap b, int factor, int size, int[,] matrix)

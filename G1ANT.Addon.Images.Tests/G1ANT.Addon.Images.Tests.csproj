@@ -75,7 +75,7 @@
     <None Include="Commands\image.expected\ShouldFindImage_WhenImageIsExpected.G1ANT" />
     <None Include="Commands\image.findrectangles\ShouldFindRectangleLocations_WhenSearchForRectangles.G1ANT" />
     <None Include="Commands\image.find\ShouldFindImageLocation_WhenSearchForImage.G1ANT" />
-    <None Include="Commands\image.sharpen\ShouldGetDifferentImage_WhenSharpenImage.G1ANT" />
+    <None Include="Commands\image.sharpen\ShouldGetDifferentImage_WhenSharpenImageIsUsed.G1ANT" />
     <None Include="Commands\waitfor.image\ShouldGetImageLocation_WhenWaitForImage.G1ANT" />
     <None Include="packages.config" />
   </ItemGroup>

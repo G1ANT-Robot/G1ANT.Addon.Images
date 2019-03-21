@@ -10,7 +10,7 @@ image.sharpen path ♥imageInputFile outputpath ♥imageOutputFile
 program mspaint.exe arguments ♥imageOutputFile
 delay milliseconds 300
 image.find ♥imageInputFile result ♥point relative false errorjump errorHandling
-error ‴image.sharpen have not change image‴
+error ‴image.sharpen has not change image‴
 label errorHandling
 keyboard window ♥activeWindow text ⋘ALT+F4⋙
 file.delete ♥imageInputFile

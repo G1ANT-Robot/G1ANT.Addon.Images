@@ -22,4 +22,4 @@ image.expected ♥image result ♥isPresent relative false errormessage ‴No su
 dialog ♥isPresent
 ```
 
-The `image.expected` command checks for image presence on screen. In the example above, the command has only 200ms for processing the screen content instead of the default 20 seconds, so despite the image is displayed, an error message “*No such image*” appears, because the timeout expires.
+The `image.expected` command checks for an image presence on screen. In the example above, the command has only 200ms for processing the screen content instead of the default 20 seconds, so despite the image is displayed, an error message “*No such image*” appears, because the timeout expires.

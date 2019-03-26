@@ -1,29 +1,41 @@
 # image.findrectangles
 
-**Syntax:**
+## Syntax
 
 ```G1ANT
-image.find  image1 ‴‴  image2 ‴‴  rectangle ‴‴  relative ‴‴  result ♥variablename 
-timeout 5000  if true  errorjump ➜labelname  errormessage ‴‴
+image.find path ⟦text⟧ invert ⟦bool⟧ minwidth ⟦integer⟧ maxwidth ⟦integer⟧ minheight ⟦integer⟧ maxheight ⟦integer⟧
 ```
 
-**Description:**
+## Description
 
-Command `image.findrectangles` allows to find provided image in another image (or part of the screen/entire screen).
-Required argument: path.
+This command finds objects separated by a black background in a specified image and returns a list of their coordinates, width and height.
 
 | Argument | Type | Required | Default Value | Description |
 | -------- | ---- | -------- | ------------- | ----------- |
-|`image1`| [string](https://github.com/G1ANT-Robot/G1ANT.Manual/blob/master/G1ANT-Language/Structures/string.md) | yes | ‴ ‴ | path of the picture to be found|
-|`image2`| [string](https://github.com/G1ANT-Robot/G1ANT.Manual/blob/master/G1ANT-Language/Structures/string.md) | no | ‴ ‴ | path of the picture where image1 will be searched- if not specified, image1 will be searched on the screen |
-|`screensearcharea`| [rectangle](https://github.com/G1ANT-Robot/G1ANT.Manual/blob/master/G1ANT-Language/Structures/rectangle.md) | no | ‴ ‴ | argument narrowing search area, specified can speed up the search, format: ‴x0⫽y0⫽x1⫽y1‴ (x0,y0 – coordinates of a top left corner; x1,y1 – coordinates of a right bottom corner of the area) |
-|`relative`| [bool](https://github.com/G1ANT-Robot/G1ANT.Manual/blob/master/G1ANT-Language/Structures/bool.md) | no | true| argument specifying whether the search is to be done relatively to the foreground window |
-|`threshold`| "float":{TOPIC-LINK+decimal}| no | number 0-1 | tolerance treshold- by default 0, which means the image has to match in 100% |
-|`centerresult`| [bool](https://github.com/G1ANT-Robot/G1ANT.Manual/blob/master/G1ANT-Language/Structures/bool.md) | no | true | if specified, result point will be pointing at the middle of the found area |
-|`offsetx`| [integer](https://github.com/G1ANT-Robot/G1ANT.Manual/blob/master/G1ANT-Language/Structures/integer.md) | no | number | value that will be added to the result's X coordinate |
-|`offsety`| [integer](https://github.com/G1ANT-Robot/G1ANT.Manual/blob/master/G1ANT-Language/Structures/integer.md) | no | number | value that will be added to the result's Y coordinate |
-|`result`| [variable](https://github.com/G1ANT-Robot/G1ANT.Manual/blob/master/G1ANT-Language/Special-Characters/variable.md) | no | ♥variablename | name of variable where X,Y coordinates (rectangle center) will be stored |
-|`timeout`| [integer](https://github.com/G1ANT-Robot/G1ANT.Manual/blob/master/G1ANT-Language/Structures/integer.md) | no | "timeoutimagefind":{TOPIC-LINK+special-variables} | specifies maximum number of milliseconds to wait for picture to be found|
-|`if`| [bool](https://github.com/G1ANT-Robot/G1ANT.Manual/blob/master/G1ANT-Language/Structures/bool.md) | no | true | runs the command only if "if" condition is true |
-|`errorjump`| [label](https://github.com/G1ANT-Robot/G1ANT.Manual/blob/master/G1ANT-Language/Structures/label.md) | no | ➜labelname | name of the label to jump to if given timeout expires |
-|`errormessage`| [string](https://github.com/G1ANT-Robot/G1ANT.Manual/blob/master/G1ANT-Language/Structures/string.md) | no | ‴ ‴ | message that will be shown in case error occurs and no `errorjump` argument is specified |
+|`path`| [text](G1ANT.Language/G1ANT.Language/Structures/TextStructure.md) | yes |  | Path to an image file with objects to be counted |
+|`invert`| [bool](G1ANT.Language/G1ANT.Language/Structures/BooleanStructure.md) | no | true | By default, this argument inverts a specified image (makes it a negative), so standard, white-background images can be processed. For black-background images, set this argument to `false` |
+|`minwidth`| [integer](G1ANT.Language/G1ANT.Language/Structures/IntegerStructure.md) | no |  | Minimal width of an image area to be processed               |
+|`maxwidth`| [integer](G1ANT.Language/G1ANT.Language/Structures/IntegerStructure.md) | no |  | Maximal width of an image area to be processed               |
+|`minheight`| [integer](G1ANT.Language/G1ANT.Language/Structures/IntegerStructure.md) | no |  | Minimal height of an image area to be processed              |
+|`maxheight`| [integer](G1ANT.Language/G1ANT.Language/Structures/IntegerStructure.md) | no |                                                              | Maximal height of an image area to be processed              |
+| `result`       | [variable](G1ANT.Language/G1ANT.Language/Structures/VariableStructure.md) | no       | `♥result`                                                   | Name of a variable where the command's result will be stored |
+| `if`           | [bool](G1ANT.Language/G1ANT.Language/Structures/BooleanStructure.md) | no       | true                                                        | Executes the command only if a specified condition is true   |
+| `timeout`      | [timespan](G1ANT.Language/G1ANT.Language/Structures/TimeSpanStructure.md) | no       | [♥timeoutcommand](G1ANT.Language/G1ANT.Addon.Core/Variables/TimeoutCommandVariable.md) | Specifies time in milliseconds for G1ANT.Robot to wait for the command to be executed |
+| `errorcall`    | [procedure](G1ANT.Language/G1ANT.Language/Structures/ProcedureStructure.md) | no       |                                                             | Name of a procedure to call when the command throws an exception or when a given `timeout` expires |
+| `errorjump`    | [label](G1ANT.Language/G1ANT.Language/Structures/LabelStructure.md) | no       |                                                             | Name of the label to jump to when the command throws an exception or when a given `timeout` expires |
+| `errormessage` | [text](G1ANT.Language/G1ANT.Language/Structures/TextStructure.md) | no       |                                                             | A message that will be shown in case the command throws an exception or when a given `timeout` expires, and no `errorjump` argument is specified |
+| `errorresult`  | [variable](G1ANT.Language/G1ANT.Language/Structures/VariableStructure.md) | no       |                                                             | Name of a variable that will store the returned exception. The variable will be of [error](G1ANT.Language/G1ANT.Language/Structures/ErrorStructure.md) structure  |
+
+For more information about `if`, `timeout`, `errorcall`, `errorjump`, `errormessage` and `errorresult` arguments, see [Common Arguments](G1ANT.Manual/appendices/common-arguments.md) page.
+
+## Example
+
+In the following script the robot downloads a sample dotted image file to the user’s Desktop, then executes the `image.findrectangles` command, which finds elements (dots) and displays the result (a list of elements’ coordinates, widths and heights) in a dialog box:
+
+```G1ANT
+♥image = ♥environment⟦USERPROFILE⟧\Desktop\image.png
+file.download https://static.makeuseof.com/wp-content/uploads/2016/06/PolkaDots2.jpg filename ♥image
+image.findrectangles ♥image
+dialog ♥result
+```
+

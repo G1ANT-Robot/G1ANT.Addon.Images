@@ -1,4 +1,4 @@
-﻿/**
+/**
 *    Copyright(C) G1ANT Ltd, All rights reserved
 *    Solution G1ANT.Addon, Project G1ANT.Addon.Images
 *    www.g1ant.com
@@ -15,7 +15,7 @@ using G1ANT.Language.Images;
 
 namespace G1ANT.Language.Images
 {
-    [Command(Name = "image.expected", Tooltip = "This command allows to confirm if image1 is exactly the same as image2")]
+    [Command(Name = "image.expected", Tooltip = "This command checks if `image1` is exactly the same as `image2` (or is displayed somewhere on the screen) and returns a true/false result.")]
     public class ImageExpectedCommand : Command
     {
         public class Arguments : CommandArguments
@@ -32,13 +32,13 @@ namespace G1ANT.Language.Images
             [Argument(Tooltip = "Argument specifying, whether the search is to be done relatively to the foreground window")]
             public BooleanStructure Relative { get; set; } = new BooleanStructure(true);
 
-            [Argument(Tooltip = "Tolerance threshold. By default 0, which means that the image has to match in 100%.")]
+            [Argument(Tooltip = "Tolerance threshold (0-1 range); the default 0 means it has to be a 100% match")]
             public FloatStructure Threshold { get; set; } = new FloatStructure(0);
 
             [Argument]
             public VariableStructure Result { get; set; } = new VariableStructure("result");
 
-            [Argument(Required = true, DefaultVariable = "timeoutimageexpected")]
+            [Argument(Required = true, DefaultVariable = "timeoutimageexpected", Tooltip = "Specifies time in milliseconds for G1ANT.Robot to wait for the command to be executed")]
             public override TimeSpanStructure Timeout { get; set; }
 
 

@@ -1,4 +1,4 @@
-﻿/**
+/**
 *    Copyright(C) G1ANT Ltd, All rights reserved
 *    Solution G1ANT.Addon, Project G1ANT.Addon.Images
 *    www.g1ant.com
@@ -16,7 +16,7 @@ using G1ANT.Language.Images;
 namespace G1ANT.Language.Images
 {
 
-    [Command(Name = "waitfor.image", Tooltip = "This command allows to wait for specified image in current screen view.")]
+    [Command(Name = "waitfor.image", Tooltip = "This command waits for a specified image to appear on the screen and returns the coordinates of the matching image — its top-left or the center (default) pixel coordinates, depending on the `centerresult` argument).")]
     public class WaitForImageCommand : Command
     {
         public class Arguments : CommandArguments
@@ -39,10 +39,10 @@ namespace G1ANT.Language.Images
             [Argument(Tooltip = "Value that will be added to the result's X coordinate.")]
             public IntegerStructure OffsetX { get; set; } = new IntegerStructure(0);
 
-            [Argument(Tooltip = "Value that will be added to the result's Y coordinate.")]
+            [Argument(Tooltip = "Value that will be added to the result's Y coordinate")]
             public IntegerStructure OffsetY { get; set; } = new IntegerStructure(0);
 
-            [Argument(Required = true, DefaultVariable = "timeoutimagefind")]
+            [Argument(Required = true, DefaultVariable = "timeoutimagefind", Tooltip = "Specifies time in milliseconds for G1ANT.Robot to wait for the command to be executed")]
             public override TimeSpanStructure Timeout { get; set; }
 
             [Argument]

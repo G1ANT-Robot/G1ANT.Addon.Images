@@ -33,7 +33,7 @@ namespace G1ANT.Language.Images
             [Argument(Tooltip = "Argument narrowing search area. Specifying can speed up the search.")]
             public RectangleStructure ScreenSearchArea { get; set; } = new RectangleStructure(new Rectangle(0,0,SystemInformation.VirtualScreen.Width, SystemInformation.VirtualScreen.Height));
 
-            [Argument(Tooltip = "If specified, result point will be pointing at the middle of the found area.")]
+            [Argument(Tooltip = "If specified, the resulting point will be placed in the center of the matching area")]
             public BooleanStructure CenterResult { get; set; } = new BooleanStructure(true);
 
             [Argument(Tooltip = "Value that will be added to the result's X coordinate")]

@@ -35,7 +35,7 @@ namespace G1ANT.Language.Images
             [Argument(Tooltip = "Tolerance threshold. By default 0, which means that the image has to match in 100%.")]
             public FloatStructure Threshold { get; set; } = new FloatStructure(0);
 
-            [Argument(Tooltip = "If specified, result point will be pointing at the middle of the found area.")]
+            [Argument(Tooltip = "If specified, the resulting point will be placed in the center of the matching area")]
             public BooleanStructure CenterResult { get; set; } = new BooleanStructure(true);
 
             [Argument(Tooltip = "Value that will be added to the result's X coordinate")]

@@ -29,7 +29,7 @@ namespace G1ANT.Language.Images
             [Argument(Tooltip = "Argument narrowing search area. Specifying can speed up the search.")]
             public RectangleStructure ScreenSearchArea { get; set; } = new RectangleStructure(SystemInformation.VirtualScreen);
 
-            [Argument(Tooltip = "Argument specifying, whether the search is to be done relatively to the foreground window")]
+            [Argument(Tooltip = "Specifies whether the search should be done relatively to the active window")]
             public BooleanStructure Relative { get; set; } = new BooleanStructure(true);
 
             [Argument(Tooltip = "Tolerance threshold (0-1 range); the default 0 means it has to be a 100% match")]

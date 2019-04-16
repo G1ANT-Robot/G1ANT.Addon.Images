@@ -27,7 +27,7 @@ namespace G1ANT.Language.Images
             [Argument(Tooltip = "Argument specifying, whether the search is to be done relatively to the foreground window")]
             public BooleanStructure Relative { get; set; } = new BooleanStructure(true);
 
-            [Argument(Tooltip = "Tolerance threshold. By default 0, which means that the image has to match in 100%.")]
+            [Argument(Tooltip = "Tolerance threshold (0-1 range); the default 0 means it has to be a 100% match")]
             public FloatStructure Threshold { get; set; } = new FloatStructure(0);
 
             [Argument(Tooltip = "Narrows the search area to a rectangle specified by coordinates in the `x0⫽y0⫽x1⫽y1` format, where `x0⫽y0` and `x1⫽y1` are the pixel coordinates in the top left corner and the bottom right corner of the rectangle, respectively")]

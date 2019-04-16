@@ -36,7 +36,7 @@ namespace G1ANT.Language.Images
             [Argument(Tooltip = "If specified, result point will be pointing at the middle of the found area.")]
             public BooleanStructure CenterResult { get; set; } = new BooleanStructure(true);
 
-            [Argument(Tooltip = "Value that will be added to the result's X coordinate.")]
+            [Argument(Tooltip = "Value that will be added to the result's X coordinate")]
             public IntegerStructure OffsetX { get; set; } = new IntegerStructure(0);
 
             [Argument(Tooltip = "Value that will be added to the result's Y coordinate")]

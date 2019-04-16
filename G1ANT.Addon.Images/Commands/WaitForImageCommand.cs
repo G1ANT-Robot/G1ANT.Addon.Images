@@ -30,7 +30,7 @@ namespace G1ANT.Language.Images
             [Argument(Tooltip = "Tolerance threshold. By default 0, which means that the image has to match in 100%.")]
             public FloatStructure Threshold { get; set; } = new FloatStructure(0);
 
-            [Argument(Tooltip = "Argument narrowing search area. Specifying can speed up the search.")]
+            [Argument(Tooltip = "Narrows the search area to a rectangle specified by coordinates in the `x0⫽y0⫽x1⫽y1` format, where `x0⫽y0` and `x1⫽y1` are the pixel coordinates in the top left corner and the bottom right corner of the rectangle, respectively")]
             public RectangleStructure ScreenSearchArea { get; set; } = new RectangleStructure(new Rectangle(0,0,SystemInformation.VirtualScreen.Width, SystemInformation.VirtualScreen.Height));
 
             [Argument(Tooltip = "If specified, the resulting point will be placed in the center of the matching area")]

@@ -20,7 +20,7 @@ namespace G1ANT.Language.Images
     {
         public class Arguments : CommandArguments
         {
-            [Argument(Required = true, Tooltip = "Path of the picture to be found.")]
+            [Argument(Required = true, Tooltip = "Path to a file with an image be found")]
             public TextStructure Image1 { get; set; }
 
             [Argument(Tooltip = "Path to a image file in which `image1` will be searched. If not specified, `image1` will be searched on the screen")]

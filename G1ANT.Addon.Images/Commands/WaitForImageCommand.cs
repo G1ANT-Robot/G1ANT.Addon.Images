@@ -21,7 +21,7 @@ namespace G1ANT.Language.Images
     {
         public class Arguments : CommandArguments
         {
-            [Argument(Required = true, Tooltip = "Specifies path to an image that we are waiting for.")]
+            [Argument(Required = true, Tooltip = "Path to a file with an awaited image")]
             public TextStructure Image { get; set; }
 
             [Argument(Tooltip = "Specifies whether the search should be done relatively to the active window")]

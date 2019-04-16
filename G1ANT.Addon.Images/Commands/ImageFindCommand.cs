@@ -26,7 +26,7 @@ namespace G1ANT.Language.Images
             [Argument(Tooltip = "Path of the picture where image1 will be searched. If not specified, image1 will be searched on the screen.")]
             public TextStructure Image2 { get; set; }
 
-            [Argument(Tooltip = "Argument narrowing search area. Specifying can speed up the search.")]
+            [Argument(Tooltip = "Narrows the search area to a rectangle specified by coordinates in the `x0⫽y0⫽x1⫽y1` format, where `x0⫽y0` and `x1⫽y1` are the pixel coordinates in the top left corner and the bottom right corner of the rectangle, respectively")]
             public RectangleStructure ScreenSearchArea { get; set; } = new RectangleStructure(SystemInformation.VirtualScreen);
 
             [Argument(Tooltip = "Specifies whether the search should be done relatively to the active window")]

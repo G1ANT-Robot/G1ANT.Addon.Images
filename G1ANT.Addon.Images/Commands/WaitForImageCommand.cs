@@ -24,7 +24,7 @@ namespace G1ANT.Language.Images
             [Argument(Required = true, Tooltip = "Specifies path to an image that we are waiting for.")]
             public TextStructure Image { get; set; }
 
-            [Argument(Tooltip = "Argument specifying, whether the search is to be done relatively to the foreground window")]
+            [Argument(Tooltip = "Specifies whether the search should be done relatively to the active window")]
             public BooleanStructure Relative { get; set; } = new BooleanStructure(true);
 
             [Argument(Tooltip = "Tolerance threshold (0-1 range); the default 0 means it has to be a 100% match")]

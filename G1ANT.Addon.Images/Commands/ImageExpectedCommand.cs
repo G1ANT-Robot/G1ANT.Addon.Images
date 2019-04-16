@@ -15,7 +15,7 @@ using G1ANT.Language.Images;
 
 namespace G1ANT.Language.Images
 {
-    [Command(Name = "image.expected", Tooltip = "This command checks if `image1` is exactly the same as `image2` (or is displayed somewhere on the screen) and returns a true/false result.")]
+    [Command(Name = "image.expected", Tooltip = "This command checks if `image1` is exactly the same as `image2` (or is displayed somewhere on the screen) and returns a true/false result")]
     public class ImageExpectedCommand : Command
     {
         public class Arguments : CommandArguments

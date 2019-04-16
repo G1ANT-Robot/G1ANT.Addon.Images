@@ -15,7 +15,7 @@ using G1ANT.Language;
 
 namespace G1ANT.Language.Images
 {
-    [Command(Name = "image.find", Tooltip = "This command finds a specified image in another image (or in a part of the screen/entire screen) and returns the coordinates of the matching image — its top-left or the center (default) pixel coordinates, depending on the `centerresult` argument).")]
+    [Command(Name = "image.find", Tooltip = "This command finds a specified image in another image (or in a part of the screen/entire screen) and returns the coordinates of the matching image — its top-left or the center (default) pixel coordinates, depending on the `centerresult` argument)")]
     public class ImageFindCommand : Command
     {
         public class Arguments : CommandArguments

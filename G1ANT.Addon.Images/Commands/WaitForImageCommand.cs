@@ -16,7 +16,7 @@ using G1ANT.Language.Images;
 namespace G1ANT.Language.Images
 {
 
-    [Command(Name = "waitfor.image", Tooltip = "This command waits for a specified image to appear on the screen and returns the coordinates of the matching image — its top-left or the center (default) pixel coordinates, depending on the `centerresult` argument).")]
+    [Command(Name = "waitfor.image", Tooltip = "This command waits for a specified image to appear on the screen and returns the coordinates of the matching image — its top-left or the center (default) pixel coordinates, depending on the `centerresult` argument)")]
     public class WaitForImageCommand : Command
     {
         public class Arguments : CommandArguments

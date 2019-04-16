@@ -14,7 +14,7 @@ using G1ANT.Language;
 
 namespace G1ANT.Language.Images
 {
-    [Command(Name = "image.sharpen", Tooltip = "This command sharpens a specified image.")]
+    [Command(Name = "image.sharpen", Tooltip = "This command sharpens a specified image")]
     public class ImageSharpenCommand : Command
     {
         public class Arguments : CommandArguments

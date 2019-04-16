@@ -15,7 +15,7 @@ using System.IO;
 
 namespace G1ANT.Language.Images
 {
-    [Command(Name = "image.findrectangles", Tooltip = "This command finds objects separated by a black background in a specified image and returns a list of their coordinates, width and height.")]
+    [Command(Name = "image.findrectangles", Tooltip = "This command finds objects separated by a black background in a specified image and returns a list of their coordinates, width and height")]
     public class ImageFindRectanglesCommand : Command
     {
         public class Arguments : CommandArguments

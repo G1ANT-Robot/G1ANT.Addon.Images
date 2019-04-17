@@ -15,5 +15,5 @@
 
 | Name | Description |
 | ---- | ----------- |
-| [timeoutimageexpected](https://github.com/G1ANT-Robot/G1ANT.Addon/blob/master/G1ANT.Addon.Images/Variables/TimeoutImageExpectedVariable.md) | Determines the timeout value (in ms) for the [image.expected](G1ANT.Addon/G1ANT.Addon.Images/G1ANT.Addon.Images/Commands/ImageExpectedCommand.md) command; the default value is 20000 (20 seconds) |
-| [timeoutimagefind](https://github.com/G1ANT-Robot/G1ANT.Addon/blob/master/G1ANT.Addon.Images/Variables/TimeoutImageFindVariable.md) | Determines the timeout value (in ms) for the [image.find](G1ANT.Addon/G1ANT.Addon.Images/G1ANT.Addon.Images/Commands/ImageFindCommand.md) and [waifor.image](G1ANT.Addon/G1ANT.Addon.Images/G1ANT.Addon.Images/Commands/WaitforImageCommand.md) commands; the default value is 20000 (20 seconds) |
+| [timeoutimageexpected](https://github.com/G1ANT-Robot/G1ANT.Addon/blob/master/G1ANT.Addon.Images/Variables/TimeoutImageExpectedVariable.md) | Determines the timeout value (in ms) for the image.expected command; the default value is 20000 (20 seconds) |
+| [timeoutimagefind](https://github.com/G1ANT-Robot/G1ANT.Addon/blob/master/G1ANT.Addon.Images/Variables/TimeoutImageFindVariable.md) | Determines the timeout value (in ms) for the image.find and waifor.image commands; the default value is 20000 (20 seconds) |

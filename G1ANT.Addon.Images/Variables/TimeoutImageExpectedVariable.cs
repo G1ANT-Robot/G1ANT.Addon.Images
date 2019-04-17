@@ -9,7 +9,7 @@ namespace G1ANT.Addon.Core
 {
     [Variable(
         Name = "timeoutimageexpected",
-        Tooltip = "Determines the timeout value (in ms) for the [image.expected](G1ANT.Addon/G1ANT.Addon.Images/G1ANT.Addon.Images/Commands/ImageExpectedCommand.md) command; the default value is 20000 (20 seconds)")]
+        Tooltip = "Determines the timeout value (in ms) for the image.expected command; the default value is 20000 (20 seconds)")]
     public class TimeoutImageExpectedVariable : Variable
     {
         private TimeSpanStructure value;

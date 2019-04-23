@@ -13,7 +13,7 @@ This command finds objects separated by a black background in a specified image 
 | Argument | Type | Required | Default Value | Description |
 | -------- | ---- | -------- | ------------- | ----------- |
 |`path`| [text](G1ANT.Language/G1ANT.Language/Structures/TextStructure.md) | yes |  | Path to an image file with objects to be counted |
-|`invert`| [bool](G1ANT.Language/G1ANT.Language/Structures/BooleanStructure.md) | no | true | By default, this argument inverts a specified image (makes it a negative), so standard, white-background images can be processed. For black-background images, set this argument to `false` |
+|`invert`| [bool](G1ANT.Language/G1ANT.Language/Structures/BooleanStructure.md) | no | true | By default, this argument inverts a specified image (makes it a negative), so standard, white-background images can be processed (for black-background images, set this argument to `false`) |
 |`minwidth`| [integer](G1ANT.Language/G1ANT.Language/Structures/IntegerStructure.md) | no |  | Minimal width of an image area to be processed               |
 |`maxwidth`| [integer](G1ANT.Language/G1ANT.Language/Structures/IntegerStructure.md) | no |  | Maximal width of an image area to be processed               |
 |`minheight`| [integer](G1ANT.Language/G1ANT.Language/Structures/IntegerStructure.md) | no |  | Minimal height of an image area to be processed              |

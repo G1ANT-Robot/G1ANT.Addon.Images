@@ -8,12 +8,12 @@ image.find image1 ⟦text⟧ image2 ⟦text⟧ screensearcharea ⟦rectangle⟧ 
 
 ## Description
 
-This command finds a specified image in another image (or in a part of the screen/entire screen) and returns the coordinates of the matching image — its top-left or the center (default) pixel coordinates, depending on the `centerresult` argument).
+This command finds a specified image in another image (or in a part of the screen/entire screen) and returns the coordinates of the matching image. These coordinates point to the matching image’s top-left or the center (default) pixel, depending on the `centerresult` argument.
 
 | Argument | Type | Required | Default Value | Description |
 | -------- | ---- | -------- | ------------- | ----------- |
 |`image1`| [text](G1ANT.Language/G1ANT.Language/Structures/TextStructure.md) | yes |  | Path to a file with an image be found |
-|`image2`| [text](G1ANT.Language/G1ANT.Language/Structures/TextStructure.md) | no |  | Path to a image file in which `image1` will be searched. If not specified, `image1` will be searched on the screen |
+|`image2`| [text](G1ANT.Language/G1ANT.Language/Structures/TextStructure.md) | no |  | Path to a image file in which `image1` will be searched; if not specified, `image1` will be searched on the screen |
 |`screensearcharea`| [rectangle](G1ANT.Language/G1ANT.Language/Structures/RectangleStructure.md) | no | (equal to the current screen area) | Narrows the search area to a rectangle specified by coordinates in the `x0⫽y0⫽x1⫽y1` format, where `x0⫽y0` and `x1⫽y1` are the pixel coordinates in the top left corner and the bottom right corner of the rectangle, respectively |
 |`relative`| [bool](G1ANT.Language/G1ANT.Language/Structures/BooleanStructure.md) | no | true| Specifies whether the search should be done relatively to the active window |
 |`threshold`| [float](G1ANT.Language/G1ANT.Language/Structures/FloatStructure.md) | no | 0 | Tolerance threshold (0-1 range); the default 0 means it has to be a 100% match |

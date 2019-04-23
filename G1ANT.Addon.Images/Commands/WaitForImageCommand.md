@@ -8,7 +8,7 @@ waitfor.image image ⟦text⟧ screensearcharea ⟦rectangle⟧ relative ⟦bool
 
 ## Description
 
-This command waits for a specified image to appear on the screen and returns the coordinates of the matching image — its top-left or the center (default) pixel coordinates, depending on the `centerresult` argument).
+This command waits for a specified image to appear on the screen and returns the coordinates of the matching image. These coordinates point to the matching image’s top-left or the center (default) pixel, depending on the `centerresult` argument.
 
 | Argument | Type | Required | Default Value | Description |
 | -------- | ---- | -------- | ------------- | ----------- |

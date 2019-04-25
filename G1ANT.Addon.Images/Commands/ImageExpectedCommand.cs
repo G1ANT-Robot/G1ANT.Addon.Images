@@ -1,4 +1,4 @@
-﻿/**
+/**
 *    Copyright(C) G1ANT Ltd, All rights reserved
 *    Solution G1ANT.Addon, Project G1ANT.Addon.Images
 *    www.g1ant.com
@@ -15,30 +15,30 @@ using G1ANT.Language.Images;
 
 namespace G1ANT.Language.Images
 {
-    [Command(Name = "image.expected", Tooltip = "This command allows to confirm if image1 is exactly the same as image2")]
+    [Command(Name = "image.expected", Tooltip = "This command checks if `image1` is exactly the same as `image2` (or is displayed somewhere on the screen) and returns a true/false result")]
     public class ImageExpectedCommand : Command
     {
         public class Arguments : CommandArguments
         {
-            [Argument(Required = true, Tooltip = "Path of the picture to be found.")]
+            [Argument(Required = true, Tooltip = "Path to a file with an image be found")]
             public TextStructure Image1 { get; set; }
 
-            [Argument(Tooltip = "Path of the picture where image1 will be searched. If not specified, image1 will be searched on the screen.")]
+            [Argument(Tooltip = "Path to a image file in which `image1` will be searched. If not specified, `image1` will be searched on the screen")]
             public TextStructure Image2 { get; set; }
 
-            [Argument(Tooltip = "Argument narrowing search area. Specifying can speed up the search.")]
+            [Argument(Tooltip = "Narrows the search area to a rectangle specified by coordinates in the `x0⫽y0⫽x1⫽y1` format, where `x0⫽y0` and `x1⫽y1` are the pixel coordinates in the top left corner and the bottom right corner of the rectangle, respectively")]
             public RectangleStructure ScreenSearchArea { get; set; } = new RectangleStructure(SystemInformation.VirtualScreen);
 
-            [Argument(Tooltip = "Argument specifying, whether the search is to be done relatively to the foreground window")]
+            [Argument(Tooltip = "Specifies whether the search should be done relatively to the active window")]
             public BooleanStructure Relative { get; set; } = new BooleanStructure(true);
 
-            [Argument(Tooltip = "Tolerance threshold. By default 0, which means that the image has to match in 100%.")]
+            [Argument(Tooltip = "Tolerance threshold (0-1 range); the default 0 means it has to be a 100% match")]
             public FloatStructure Threshold { get; set; } = new FloatStructure(0);
 
-            [Argument]
+            [Argument(Tooltip = "Name of a variable where the command's result will be stored: `true` if there is a match, `false` if not")]
             public VariableStructure Result { get; set; } = new VariableStructure("result");
 
-            [Argument(Required = true, DefaultVariable = "timeoutimageexpected")]
+            [Argument(Required = true, DefaultVariable = "timeoutimageexpected", Tooltip = "Specifies time in milliseconds for G1ANT.Robot to wait for the command to be executed")]
             public override TimeSpanStructure Timeout { get; set; }
 
 

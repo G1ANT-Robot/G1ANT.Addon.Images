@@ -1,4 +1,4 @@
-﻿using G1ANT.Language;
+using G1ANT.Language;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ namespace G1ANT.Addon.Core
 {
     [Variable(
         Name = "timeoutimagefind",
-        Tooltip = "Determines the timeout value for the image.find command; the default value is 20000 ms.")]
+        Tooltip = "Determines the timeout value (in ms) for the image.find and waifor.image commands; the default value is 20000 (20 seconds)")]
     public class TimeoutImageFindVariable : Variable
     {
         private TimeSpanStructure value;

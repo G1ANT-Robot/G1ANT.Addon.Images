@@ -1,4 +1,4 @@
-﻿/**
+/**
 *    Copyright(C) G1ANT Ltd, All rights reserved
 *    Solution G1ANT.Addon, Project G1ANT.Addon.Images
 *    www.g1ant.com
@@ -16,36 +16,36 @@ using G1ANT.Language.Images;
 namespace G1ANT.Language.Images
 {
 
-    [Command(Name = "waitfor.image", Tooltip = "This command allows to wait for specified image in current screen view.")]
+    [Command(Name = "waitfor.image", Tooltip = "This command waits for a specified image to appear on the screen and returns the coordinates of the matching image — its top-left or the center (default) pixel coordinates, depending on the `centerresult` argument)")]
     public class WaitForImageCommand : Command
     {
         public class Arguments : CommandArguments
         {
-            [Argument(Required = true, Tooltip = "Specifies path to an image that we are waiting for.")]
+            [Argument(Required = true, Tooltip = "Path to a file with an awaited image")]
             public TextStructure Image { get; set; }
 
-            [Argument(Tooltip = "Argument specifying, whether the search is to be done relatively to the foreground window")]
+            [Argument(Tooltip = "Specifies whether the search should be done relatively to the active window")]
             public BooleanStructure Relative { get; set; } = new BooleanStructure(true);
 
-            [Argument(Tooltip = "Tolerance threshold. By default 0, which means that the image has to match in 100%.")]
+            [Argument(Tooltip = "Tolerance threshold (0-1 range); the default 0 means it has to be a 100% match")]
             public FloatStructure Threshold { get; set; } = new FloatStructure(0);
 
-            [Argument(Tooltip = "Argument narrowing search area. Specifying can speed up the search.")]
+            [Argument(Tooltip = "Narrows the search area to a rectangle specified by coordinates in the `x0⫽y0⫽x1⫽y1` format, where `x0⫽y0` and `x1⫽y1` are the pixel coordinates in the top left corner and the bottom right corner of the rectangle, respectively")]
             public RectangleStructure ScreenSearchArea { get; set; } = new RectangleStructure(new Rectangle(0,0,SystemInformation.VirtualScreen.Width, SystemInformation.VirtualScreen.Height));
 
-            [Argument(Tooltip = "If specified, result point will be pointing at the middle of the found area.")]
+            [Argument(Tooltip = "If specified, the resulting point will be placed in the center of the matching area")]
             public BooleanStructure CenterResult { get; set; } = new BooleanStructure(true);
 
-            [Argument(Tooltip = "Value that will be added to the result's X coordinate.")]
+            [Argument(Tooltip = "Value that will be added to the result's X coordinate")]
             public IntegerStructure OffsetX { get; set; } = new IntegerStructure(0);
 
-            [Argument(Tooltip = "Value that will be added to the result's Y coordinate.")]
+            [Argument(Tooltip = "Value that will be added to the result's Y coordinate")]
             public IntegerStructure OffsetY { get; set; } = new IntegerStructure(0);
 
-            [Argument(Required = true, DefaultVariable = "timeoutimagefind")]
+            [Argument(Required = true, DefaultVariable = "timeoutimagefind", Tooltip = "Specifies time in milliseconds for G1ANT.Robot to wait for the command to be executed")]
             public override TimeSpanStructure Timeout { get; set; }
 
-            [Argument]
+            [Argument(Tooltip = "Name of a variable where the command's result will be stored")]
             public VariableStructure Result { get; set; } = new VariableStructure("result");
             
         }

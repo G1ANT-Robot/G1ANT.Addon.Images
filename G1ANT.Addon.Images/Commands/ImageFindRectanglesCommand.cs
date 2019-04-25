@@ -1,4 +1,4 @@
-﻿/**
+/**
 *    Copyright(C) G1ANT Ltd, All rights reserved
 *    Solution G1ANT.Addon, Project G1ANT.Addon.Images
 *    www.g1ant.com
@@ -15,30 +15,30 @@ using System.IO;
 
 namespace G1ANT.Language.Images
 {
-    [Command(Name = "image.findrectangles")]
+    [Command(Name = "image.findrectangles", Tooltip = "This command finds objects separated by a black background in a specified image and returns a list of their coordinates, width and height")]
     public class ImageFindRectanglesCommand : Command
     {
         public class Arguments : CommandArguments
         {
-            [Argument(Required = true)]
+            [Argument(Required = true, Tooltip = "Path to an image file with objects to be counted")]
             public TextStructure Path { get; set; }
 
-            [Argument]
+            [Argument(Tooltip = "Name of a variable where the command's result will be stored")]
             public VariableStructure Result { get; set; } = new VariableStructure("result");
 
-            [Argument]
+            [Argument(Tooltip = "By default, this argument inverts a specified image (makes it a negative), so standard, white-background images can be processed. For black-background images, set this argument to `false`")]
             public BooleanStructure Invert { get; set; } = new BooleanStructure(true);
 
-            [Argument]
+            [Argument(Tooltip = "Minimal width of an image area to be processed")]
             public IntegerStructure MinWidth { get; set; }
 
-            [Argument]
+            [Argument(Tooltip = "Maximal width of an image area to be processed")]
             public IntegerStructure MaxWidth { get; set; }
 
-            [Argument]
+            [Argument(Tooltip = "Minimal height of an image area to be processed")]
             public IntegerStructure MinHeight { get; set; }
 
-            [Argument]
+            [Argument(Tooltip = "Maximal height of an image area to be processed")]
             public IntegerStructure MaxHeight { get; set; }
 
              

@@ -1,4 +1,4 @@
-﻿/**
+/**
 *    Copyright(C) G1ANT Ltd, All rights reserved
 *    Solution G1ANT.Addon, Project G1ANT.Addon.Images
 *    www.g1ant.com
@@ -14,15 +14,15 @@ using G1ANT.Language;
 
 namespace G1ANT.Language.Images
 {
-    [Command(Name = "image.sharpen", Tooltip = "This command sharpens image")]
+    [Command(Name = "image.sharpen", Tooltip = "This command sharpens a specified image")]
     public class ImageSharpenCommand : Command
     {
         public class Arguments : CommandArguments
         {
-            [Argument(Required = true, Tooltip = "Path of picture to get sharpened.")]
+            [Argument(Required = true, Tooltip = "Path to an image to be sharpened")]
             public TextStructure Path { get; set; }
 
-            [Argument(Tooltip = "Saving path. If not specified, input path will be used.")]
+            [Argument(Tooltip = "Path to a resulting file; if not specified, input path will be used and the original file will be replaced")]
             public TextStructure OutputPath { get; set; }
 
              

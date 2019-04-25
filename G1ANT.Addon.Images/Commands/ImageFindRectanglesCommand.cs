@@ -23,19 +23,19 @@ namespace G1ANT.Language.Images
             [Argument(Required = true, Tooltip = "Path to an image file with objects to be counted")]
             public TextStructure Path { get; set; }
 
-            [Argument]
+            [Argument(Tooltip = "Name of a variable where the command's result will be stored")]
             public VariableStructure Result { get; set; } = new VariableStructure("result");
 
-            [Argument]
+            [Argument(Tooltip = "By default, this argument inverts a specified image (makes it a negative), so standard, white-background images can be processed. For black-background images, set this argument to `false`")]
             public BooleanStructure Invert { get; set; } = new BooleanStructure(true);
 
-            [Argument]
+            [Argument(Tooltip = "Minimal width of an image area to be processed")]
             public IntegerStructure MinWidth { get; set; }
 
-            [Argument]
+            [Argument(Tooltip = "Maximal width of an image area to be processed")]
             public IntegerStructure MaxWidth { get; set; }
 
-            [Argument]
+            [Argument(Tooltip = "Minimal height of an image area to be processed")]
             public IntegerStructure MinHeight { get; set; }
 
             [Argument(Tooltip = "Maximal height of an image area to be processed")]

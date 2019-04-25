@@ -45,7 +45,7 @@ namespace G1ANT.Language.Images
             [Argument(Required = true, DefaultVariable = "timeoutimagefind", Tooltip = "Specifies time in milliseconds for G1ANT.Robot to wait for the command to be executed")]
             public override TimeSpanStructure Timeout { get; set; }
 
-            [Argument]
+            [Argument(Tooltip = "Name of a variable where the command's result will be stored")]
             public VariableStructure Result { get; set; } = new VariableStructure("result");
             
         }

@@ -38,7 +38,7 @@ namespace G1ANT.Language.Images
             [Argument]
             public IntegerStructure MinHeight { get; set; }
 
-            [Argument]
+            [Argument(Tooltip = "Maximal height of an image area to be processed")]
             public IntegerStructure MaxHeight { get; set; }
 
              

@@ -35,7 +35,7 @@ namespace G1ANT.Language.Images
             [Argument(Tooltip = "Tolerance threshold (0-1 range); the default 0 means it has to be a 100% match")]
             public FloatStructure Threshold { get; set; } = new FloatStructure(0);
 
-            [Argument]
+            [Argument(Tooltip = "Name of a variable where the command's result will be stored: `true` if there is a match, `false` if not")]
             public VariableStructure Result { get; set; } = new VariableStructure("result");
 
             [Argument(Required = true, DefaultVariable = "timeoutimageexpected", Tooltip = "Specifies time in milliseconds for G1ANT.Robot to wait for the command to be executed")]

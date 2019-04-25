@@ -44,7 +44,7 @@ namespace G1ANT.Language.Images
             [Argument(Tooltip = "Value that will be added to the result's Y coordinate")]
             public IntegerStructure OffsetY { get; set; } = new IntegerStructure(0);
 
-            [Argument]
+            [Argument(Tooltip = "Name of a variable where the command's result will be stored")]
             public VariableStructure Result { get; set; } = new VariableStructure("result");
 
             [Argument(Required = true, DefaultVariable = "timeoutimagefind", Tooltip = "Specifies time in milliseconds for G1ANT.Robot to wait for the command to be executed")]

@@ -15,7 +15,7 @@ using G1ANT.Language;
 
 namespace G1ANT.Language.Images
 {
-    [Command(Name = "image.find", Tooltip = "This command finds a specified image in another image (or in a part of the screen/entire screen) and returns the coordinates of the matching image — its top-left or the center (default) pixel coordinates, depending on the `centerresult` argument)")]
+    [Command(Name = "image.find", Tooltip = "This command finds a specified image in another image (or in a part of the screen/entire screen) and returns the coordinates of the matching image")]
     public class ImageFindCommand : Command
     {
         public class Arguments : CommandArguments
@@ -23,7 +23,7 @@ namespace G1ANT.Language.Images
             [Argument(Required = true, Tooltip = "Path to a file with an image be found")]
             public TextStructure Image1 { get; set; }
 
-            [Argument(Tooltip = "Path to a image file in which `image1` will be searched. If not specified, `image1` will be searched on the screen")]
+            [Argument(Tooltip = "Path to a image file in which `image1` will be searched; if not specified, `image1` will be searched on the screen")]
             public TextStructure Image2 { get; set; }
 
             [Argument(Tooltip = "Narrows the search area to a rectangle specified by coordinates in the `x0⫽y0⫽x1⫽y1` format, where `x0⫽y0` and `x1⫽y1` are the pixel coordinates in the top left corner and the bottom right corner of the rectangle, respectively")]

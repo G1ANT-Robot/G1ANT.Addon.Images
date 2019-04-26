@@ -26,7 +26,7 @@ namespace G1ANT.Language.Images
             [Argument(Tooltip = "Name of a variable where the command's result will be stored")]
             public VariableStructure Result { get; set; } = new VariableStructure("result");
 
-            [Argument(Tooltip = "By default, this argument inverts a specified image (makes it a negative), so standard, white-background images can be processed. For black-background images, set this argument to `false`")]
+            [Argument(Tooltip = "By default, this argument inverts a specified image (makes it a negative), so standard, white-background images can be processed (for black-background images, set this argument to `false`)")]
             public BooleanStructure Invert { get; set; } = new BooleanStructure(true);
 
             [Argument(Tooltip = "Minimal width of an image area to be processed")]

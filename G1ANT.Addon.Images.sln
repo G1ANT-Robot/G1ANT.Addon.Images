@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.271
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "G1ANT.Addon.Images", "G1ANT.Addon.Images\G1ANT.Addon.Images.csproj", "{41D8DB37-18A0-46EB-A7C4-847C4E54F403}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "G1ANT.Addon.Images.Tests", "G1ANT.Addon.Images.Tests\G1ANT.Addon.Images.Tests.csproj", "{F5EC3625-B099-47FD-A4DD-34F78E72831C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{41D8DB37-18A0-46EB-A7C4-847C4E54F403}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41D8DB37-18A0-46EB-A7C4-847C4E54F403}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41D8DB37-18A0-46EB-A7C4-847C4E54F403}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41D8DB37-18A0-46EB-A7C4-847C4E54F403}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5EC3625-B099-47FD-A4DD-34F78E72831C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5EC3625-B099-47FD-A4DD-34F78E72831C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5EC3625-B099-47FD-A4DD-34F78E72831C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5EC3625-B099-47FD-A4DD-34F78E72831C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {583FA2BD-B75D-40B9-B10D-3F6ACD966E31}
+	EndGlobalSection
+EndGlobal

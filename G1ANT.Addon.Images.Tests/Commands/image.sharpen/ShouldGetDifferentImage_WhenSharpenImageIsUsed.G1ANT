@@ -1,0 +1,17 @@
+﻿addon images version 2.205.17304.1000
+
+♥guid = ⊂Guid.NewGuid().ToString()⊃
+♥imageInputFile = ♥environment⟦temp⟧\♥guid.jpg
+♥guid = ⊂Guid.NewGuid().ToString()⊃
+♥imageOutputFile = ♥environment⟦temp⟧\♥guid.jpg
+
+file.download https://jeremykun.files.wordpress.com/2012/01/img49.png filename ♥imageInputFile
+image.sharpen path ♥imageInputFile outputpath ♥imageOutputFile
+program mspaint.exe arguments ♥imageOutputFile
+delay milliseconds 300
+image.find ♥imageInputFile result ♥point relative false errorjump errorHandling
+error ‴image.sharpen has not changed image‴
+label errorHandling
+keyboard window ♥activeWindow text ⋘ALT+F4⋙
+file.delete ♥imageInputFile
+file.delete ♥imageOutputFile

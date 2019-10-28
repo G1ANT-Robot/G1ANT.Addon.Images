@@ -47,16 +47,7 @@ namespace G1ANT.Addon.Images
             {
                 var similarityThreshold = (float)(1.0 - threshold.Value);
                 var templateMatching = new ExhaustiveTemplateMatching(similarityThreshold);
-                var matchings = templateMatching.ProcessImage(source, template);
-                var sourceData = source.LockBits(new Rectangle(0, 0, source.Width, source.Height), ImageLockMode.ReadWrite, source.PixelFormat);
-
-                foreach (var match in matchings)
-                {
-                    Drawing.Rectangle(sourceData, match.Rectangle, Color.White);
-                }
-
-                source.UnlockBits(sourceData);
-                source.Save(@"C:\G1ANTTEST\source.png");
+                var matchings = templateMatching.ProcessImage(source, template);                
                 return matchings.Select(m => m.Rectangle).FirstOrDefault();
             }
             catch (Exception ex)

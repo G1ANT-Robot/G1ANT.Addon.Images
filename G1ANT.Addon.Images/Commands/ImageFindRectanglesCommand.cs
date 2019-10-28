@@ -11,9 +11,8 @@ using G1ANT.Language;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
 
-namespace G1ANT.Language.Images
+namespace G1ANT.Addon.Images
 {
     [Command(Name = "image.findrectangles", Tooltip = "This command finds objects separated by a black background in a specified image and returns a list of their coordinates, width and height")]
     public class ImageFindRectanglesCommand : Command

@@ -9,10 +9,9 @@
 */
 using System;
 using System.Drawing;
-
 using G1ANT.Language;
 
-namespace G1ANT.Language.Images
+namespace G1ANT.Addon.Images
 {
     [Command(Name = "image.sharpen", Tooltip = "This command sharpens a specified image")]
     public class ImageSharpenCommand : Command

@@ -10,10 +10,9 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using G1ANT.Language;
 
-using G1ANT.Language.Images;
-
-namespace G1ANT.Language.Images
+namespace G1ANT.Addon.Images
 {
 
     [Command(Name = "waitfor.image", Tooltip = "This command waits for a specified image to appear on the screen and returns the coordinates of the matching image")]

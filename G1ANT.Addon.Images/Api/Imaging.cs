@@ -16,10 +16,10 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
-using System.Threading;
 using System.Collections.Concurrent;
+using G1ANT.Language;
 
-namespace G1ANT.Language.Images
+namespace G1ANT.Addon.Images
 {
     class Imaging
     {

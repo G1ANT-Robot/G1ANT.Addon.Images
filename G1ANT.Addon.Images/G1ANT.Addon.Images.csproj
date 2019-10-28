@@ -80,6 +80,8 @@
     <Compile Include="Commands\ImageSharpenCommand.cs" />
     <Compile Include="Commands\ImageFindCommand.cs" />
     <Compile Include="Commands\ImageFindRectanglesCommand.cs" />
+    <Compile Include="Extensions\ImageExtensions.cs" />
+    <Compile Include="Extensions\RectangeExtensions.cs" />
     <Compile Include="Variables\TimeoutImageExpectedVariable.cs" />
     <Compile Include="Variables\TimeoutImageFindVariable.cs" />
     <Compile Include="Commands\WaitForImageCommand.cs" />
@@ -118,5 +120,6 @@
   <ItemGroup>
     <EmbeddedResource Include="License.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

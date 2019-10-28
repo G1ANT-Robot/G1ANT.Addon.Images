@@ -10,10 +10,9 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using G1ANT.Language;
 
-using G1ANT.Language.Images;
-
-namespace G1ANT.Language.Images
+namespace G1ANT.Addon.Images
 {
     [Command(Name = "image.expected", Tooltip = "This command checks if `image1` is exactly the same as `image2` (or is displayed somewhere on the screen) and returns a true/false result")]
     public class ImageExpectedCommand : Command

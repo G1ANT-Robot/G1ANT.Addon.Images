@@ -323,9 +323,7 @@ namespace G1ANT.Addon.Images
         public static Rectangle ParseRectanglePositionFromArguments(Rectangle screenSearchArea, bool relative)
         {
             Rectangle result = screenSearchArea;
-            if (result.X < 0 ||
-                result.Y < 0 ||
-                result.Width < 1 ||
+            if (result.Width < 1 ||
                 result.Height < 1)
                 throw new ArgumentException("ScreenSearchArea argument's parts can't be negative. Both width and height must be bigger than zero.");
 

@@ -59,8 +59,8 @@ namespace G1ANT.Addon.Images
                 throw new ArgumentOutOfRangeException("Threshold must be a value from 0 to 1.");
             }
 
-            using (var template = arguments.Image1.OpenFile())
-            using (var source = arguments.Image2.OpenFileOrGetScreenshot(arguments.ScreenSearchArea, arguments.Relative))
+            using (var template = arguments.Image1.OpenImage())
+            using (var source = !string.IsNullOrEmpty(arguments.Image2?.Value) ? arguments.Image2.OpenImage() : arguments.ScreenSearchArea.GetScreenshot(arguments.Relative))
             {
                 var foundRectangle = source.MatchTemplate(template, arguments.Threshold);
 

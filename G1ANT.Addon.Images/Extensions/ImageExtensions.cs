@@ -10,7 +10,7 @@ namespace G1ANT.Addon.Images
 {
     public static class ImageExtensions
     {
-        public static Bitmap OpenFile(this TextStructure filePath)
+        public static Bitmap OpenImage(this TextStructure filePath)
         {
             try
             {
@@ -25,11 +25,8 @@ namespace G1ANT.Addon.Images
             }
         }
 
-        public static Bitmap OpenFileOrGetScreenshot(this TextStructure filePath, RectangleStructure screenArea, BooleanStructure relative)
+        public static Bitmap GetScreenshot(this RectangleStructure screenArea, BooleanStructure relative)
         {
-            if (!string.IsNullOrEmpty(filePath?.Value))
-                return filePath.OpenFile();
-
             try
             {
                 var screenSearchArea = Imaging.ParseRectanglePositionFromArguments(screenArea.Value, relative.Value);
@@ -47,7 +44,7 @@ namespace G1ANT.Addon.Images
             {
                 var similarityThreshold = (float)(1.0 - threshold.Value);
                 var templateMatching = new ExhaustiveTemplateMatching(similarityThreshold);
-                var matchings = templateMatching.ProcessImage(source, template);                
+                var matchings = templateMatching.ProcessImage(source, template);
                 return matchings.Select(m => m.Rectangle).FirstOrDefault();
             }
             catch (Exception ex)

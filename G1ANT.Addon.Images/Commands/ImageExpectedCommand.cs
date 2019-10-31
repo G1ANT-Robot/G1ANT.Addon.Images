@@ -39,11 +39,10 @@ namespace G1ANT.Addon.Images
 
             [Argument(Required = true, DefaultVariable = "timeoutimageexpected", Tooltip = "Specifies time in milliseconds for G1ANT.Robot to wait for the command to be executed")]
             public override TimeSpanStructure Timeout { get; set; }
-
-
         }
-        public ImageExpectedCommand(AbstractScripter scripter) : base(scripter)
-        { }
+
+        public ImageExpectedCommand(AbstractScripter scripter) : base(scripter) { }
+
         public void Execute(Arguments arguments)
         {
             if (arguments.Threshold.Value < 0 || arguments.Threshold.Value > 1)
@@ -51,16 +50,10 @@ namespace G1ANT.Addon.Images
                 throw new ArgumentOutOfRangeException("Threshold must be a value from 0 to 1.");
             }
 
-            using (Bitmap bitmap1 = Imaging.OpenImageFile(arguments.Image1.Value, nameof(arguments.Image1)))
-            using (Bitmap bitmap2 = (string.IsNullOrEmpty(arguments.Image2?.Value)) ?
-                                RobotWin32.GetPartOfScreen(
-                                    Imaging.ParseRectanglePositionFromArguments(arguments.ScreenSearchArea.Value, arguments.Relative.Value),
-                                    bitmap1.PixelFormat) :
-                                Imaging.OpenImageFile(arguments.Image2.Value, nameof(arguments.Image2)))
+            using (var template = arguments.Image1.OpenImage())
+            using (var source = !string.IsNullOrEmpty(arguments.Image2?.Value) ? arguments.Image2.OpenImage() : arguments.ScreenSearchArea.GetScreenshot(arguments.Relative))
             {
-
-
-                bool found = Rectangle.Empty != Imaging.IsImageInImage(bitmap1, bitmap2, (double)arguments.Threshold.Value);
+                var found = Rectangle.Empty != source.MatchTemplate(template, arguments.Threshold);
                 Scripter.Variables.SetVariableValue(arguments.Result.Value, new BooleanStructure(found));
             }
 

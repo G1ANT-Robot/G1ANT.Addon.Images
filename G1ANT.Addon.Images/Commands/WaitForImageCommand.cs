@@ -14,7 +14,6 @@ using G1ANT.Language;
 
 namespace G1ANT.Addon.Images
 {
-
     [Command(Name = "waitfor.image", Tooltip = "This command waits for a specified image to appear on the screen and returns the coordinates of the matching image")]
     public class WaitForImageCommand : Command
     {
@@ -45,11 +44,11 @@ namespace G1ANT.Addon.Images
             public override TimeSpanStructure Timeout { get; set; }
 
             [Argument(Tooltip = "Name of a variable where the command's result will be stored")]
-            public VariableStructure Result { get; set; } = new VariableStructure("result");
-            
+            public VariableStructure Result { get; set; } = new VariableStructure("result");            
         }
-        public WaitForImageCommand(AbstractScripter scripter) : base(scripter)
-        { }
+
+        public WaitForImageCommand(AbstractScripter scripter) : base(scripter) { }
+
         public void Execute(Arguments arguments)
         {
             if (arguments.Threshold.Value < 0 || arguments.Threshold.Value > 1)
@@ -57,19 +56,17 @@ namespace G1ANT.Addon.Images
                 throw new ArgumentOutOfRangeException("Threshold must be a value from 0 to 1.");
             }
 
-            using (Bitmap bitmap1 = Imaging.OpenImageFile(arguments.Image.Value, nameof(arguments.Image)))
+            using (var template = arguments.Image.OpenImage())
             {
-                int timeout = (int)arguments.Timeout.Value.TotalMilliseconds;
-                long start = Environment.TickCount;
-                Rectangle foundRectangle = Rectangle.Empty;
+                var timeout = (int)arguments.Timeout.Value.TotalMilliseconds;
+                var start = Environment.TickCount;
+                var foundRectangle = Rectangle.Empty;
+
                 while (Math.Abs(Environment.TickCount - start) < timeout && Scripter.Stopped == false && foundRectangle == Rectangle.Empty)
                 {
-                    using (
-                    Bitmap bitmap2 = RobotWin32.GetPartOfScreen(
-                        Imaging.ParseRectanglePositionFromArguments(arguments.ScreenSearchArea.Value, arguments.Relative.Value),
-                        bitmap1.PixelFormat))
+                    using (var source = arguments.ScreenSearchArea.GetScreenshot(arguments.Relative))
                     {
-                        foundRectangle = Imaging.IsImageInImage(bitmap1, bitmap2, (double)arguments.Threshold.Value);
+                        foundRectangle = source.MatchTemplate(template, arguments.Threshold);
                         Application.DoEvents();
                     }
                 }
@@ -80,10 +77,7 @@ namespace G1ANT.Addon.Images
                 }
                 else
                 {
-                    Point foundPoint = (!arguments.CenterResult.Value) ?
-                        new Point(foundRectangle.X, foundRectangle.Y) :
-                        new Point(foundRectangle.X + foundRectangle.Width / 2, foundRectangle.Y + foundRectangle.Height / 2);
-                    foundPoint = new Point(foundPoint.X + arguments.OffsetX.Value, foundPoint.Y + arguments.OffsetY.Value);
+                    var foundPoint = foundRectangle.GetPoint(arguments.CenterResult, arguments.OffsetX, arguments.OffsetY);
                     Scripter.Variables.SetVariableValue(arguments.Result.Value, new PointStructure(foundPoint));
                 }
             }

@@ -9,8 +9,8 @@
 */
 using G1ANT.Language;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 
 namespace G1ANT.Addon.Images
 {
@@ -39,33 +39,27 @@ namespace G1ANT.Addon.Images
 
             [Argument(Tooltip = "Maximal height of an image area to be processed")]
             public IntegerStructure MaxHeight { get; set; }
-
-             
         }
-        public ImageFindRectanglesCommand(AbstractScripter scripter) : base(scripter)
-        { }
+
+        public ImageFindRectanglesCommand(AbstractScripter scripter) : base(scripter) { }
+
         public void Execute(Arguments arguments)
         {
             try
             {
-                List<System.Drawing.Rectangle> foundRectangles = new List<System.Drawing.Rectangle>();
-                using (Bitmap image = (Bitmap)Image.FromFile(arguments.Path.Value))
+                using (var image = arguments.Path.OpenImage())
                 {
-                    foundRectangles = AForgeWrapper.FindRectangles(
+                    var foundRectangles = AForgeWrapper.FindRectangles(
                         image,
                         arguments.Invert.Value,
                         arguments.MinWidth?.Value,
                         arguments.MaxWidth?.Value,
                         arguments.MinHeight?.Value,
-                        arguments.MaxHeight?.Value);
-                }                   
+                        arguments.MaxHeight?.Value)
+                        .Select(r => new RectangleStructure(r));
 
-                List<Structure> results = new List<Structure>();
-                foreach (var foundRectangle in foundRectangles)
-                {
-                    results.Add(new RectangleStructure(foundRectangle));
+                    Scripter.Variables.SetVariableValue(arguments.Result.Value, new ListStructure(foundRectangles));
                 }
-                Scripter.Variables.SetVariableValue(arguments.Result.Value, new ListStructure(results));
             }
             catch (Exception ex)
             {               

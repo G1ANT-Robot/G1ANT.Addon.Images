@@ -114,6 +114,5 @@
   <ItemGroup>
     <EmbeddedResource Include="License.txt" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

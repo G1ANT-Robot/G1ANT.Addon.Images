@@ -61,13 +61,15 @@ namespace G1ANT.Addon.Images
             var start = Environment.TickCount;
             var foundRectangle = Rectangle.Empty;
 
-            while (Math.Abs(Environment.TickCount - start) < timeout && Scripter.Stopped == false && foundRectangle == Rectangle.Empty)
+            using (var template = arguments.Image.OpenImage())
             {
-                using (var template = arguments.Image.OpenImage())
-                using (var source = arguments.ScreenSearchArea.GetScreenshot(arguments.Relative))
+                while (Math.Abs(Environment.TickCount - start) < timeout && Scripter.Stopped == false && foundRectangle == Rectangle.Empty)
                 {
-                    foundRectangle = source.MatchTemplate(template, arguments.Threshold);
-                    Application.DoEvents();
+                    using (var source = arguments.ScreenSearchArea.GetScreenshot(arguments.Relative))
+                    {
+                        foundRectangle = source.MatchTemplate(template, arguments.Threshold);
+                        Application.DoEvents();
+                    }
                 }
             }
 

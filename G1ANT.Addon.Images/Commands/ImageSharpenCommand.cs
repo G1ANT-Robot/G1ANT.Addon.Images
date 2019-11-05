@@ -29,8 +29,9 @@ namespace G1ANT.Addon.Images
         {
             using (var image = arguments.Path.OpenImage())
             {
-                Imaging.SharpenImage(image);
-                image.Save(arguments.OutputPath?.Value ?? arguments.Path.Value);
+                image
+                    .Sharpen()
+                    .Save(arguments.OutputPath?.Value ?? arguments.Path.Value);
             }
         }
     }

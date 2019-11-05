@@ -9,6 +9,7 @@
 */
 using System;
 using System.Drawing;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using G1ANT.Language;
 
@@ -56,30 +57,28 @@ namespace G1ANT.Addon.Images
                 throw new ArgumentOutOfRangeException("Threshold must be a value from 0 to 1.");
             }
 
-            using (var template = arguments.Image.OpenImage())
+            var timeout = (int)arguments.Timeout.Value.TotalMilliseconds;
+            var start = Environment.TickCount;
+            var foundRectangle = Rectangle.Empty;
+
+            while (Math.Abs(Environment.TickCount - start) < timeout && Scripter.Stopped == false && foundRectangle == Rectangle.Empty)
             {
-                var timeout = (int)arguments.Timeout.Value.TotalMilliseconds;
-                var start = Environment.TickCount;
-                var foundRectangle = Rectangle.Empty;
+                using (var template = arguments.Image.OpenImage())
+                using (var source = arguments.ScreenSearchArea.GetScreenshot(arguments.Relative))
+                {
+                    foundRectangle = source.MatchTemplate(template, arguments.Threshold);
+                    Application.DoEvents();
+                }
+            }
 
-                while (Math.Abs(Environment.TickCount - start) < timeout && Scripter.Stopped == false && foundRectangle == Rectangle.Empty)
-                {
-                    using (var source = arguments.ScreenSearchArea.GetScreenshot(arguments.Relative))
-                    {
-                        foundRectangle = source.MatchTemplate(template, arguments.Threshold);
-                        Application.DoEvents();
-                    }
-                }
-
-                if (foundRectangle == Rectangle.Empty)
-                {
-                    throw new TimeoutException("Image was not found in specified search area.");
-                }
-                else
-                {
-                    var foundPoint = foundRectangle.GetPoint(arguments.CenterResult, arguments.OffsetX, arguments.OffsetY);
-                    Scripter.Variables.SetVariableValue(arguments.Result.Value, new PointStructure(foundPoint));
-                }
+            if (foundRectangle == Rectangle.Empty)
+            {
+                throw new TimeoutException("Image was not found in specified search area.");
+            }
+            else
+            {
+                var foundPoint = foundRectangle.GetPoint(arguments.CenterResult, arguments.OffsetX, arguments.OffsetY);
+                Scripter.Variables.SetVariableValue(arguments.Result.Value, new PointStructure(foundPoint));
             }
         }
     }

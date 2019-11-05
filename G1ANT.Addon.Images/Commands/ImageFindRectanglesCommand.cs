@@ -8,8 +8,6 @@
 *
 */
 using G1ANT.Language;
-using System;
-using System.Drawing;
 using System.Linq;
 
 namespace G1ANT.Addon.Images
@@ -45,25 +43,15 @@ namespace G1ANT.Addon.Images
 
         public void Execute(Arguments arguments)
         {
-            try
+            using (var image = arguments.Path.OpenImage())
             {
-                using (var image = arguments.Path.OpenImage())
-                {
-                    var foundRectangles = AForgeWrapper.FindRectangles(
-                        image,
-                        arguments.Invert.Value,
-                        arguments.MinWidth?.Value,
-                        arguments.MaxWidth?.Value,
-                        arguments.MinHeight?.Value,
-                        arguments.MaxHeight?.Value)
-                        .Select(r => new RectangleStructure(r));
+                var foundRectangles = image
+                    .FindRectangles(arguments.Invert)
+                    .FitInBound(image.Size, arguments.MinWidth, arguments.MaxWidth, arguments.MinHeight, arguments.MaxHeight)
+                    .Select(r => new RectangleStructure(r))
+                    .ToList();
 
-                    Scripter.Variables.SetVariableValue(arguments.Result.Value, new ListStructure(foundRectangles));
-                }
-            }
-            catch (Exception ex)
-            {               
-                throw new ApplicationException($"Specified directory doesn't exist. Message: {ex.Message}", ex);
+                Scripter.Variables.SetVariableValue(arguments.Result.Value, new ListStructure(foundRectangles));
             }
         }
     }

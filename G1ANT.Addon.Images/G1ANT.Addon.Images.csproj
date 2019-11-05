@@ -73,9 +73,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Api\AForgeWrapper.cs" />
-    <Compile Include="Api\Imaging.cs" />
-    <Compile Include="Api\MatrixTransform.cs" />
     <Compile Include="Commands\ImageExpectedCommand.cs" />
     <Compile Include="Commands\ImageSharpenCommand.cs" />
     <Compile Include="Commands\ImageFindCommand.cs" />
@@ -113,9 +110,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\image22.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="License.txt" />

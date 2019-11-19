@@ -10,12 +10,13 @@
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
+using G1ANT.Addon.Images;
 using G1ANT.Addon.Images.Enums;
 using G1ANT.Addon.Images.Factories;
 
 namespace G1ANT.Language.Images
 {
-    [Command(Name = "image.smoothingfilter", Tooltip = "This command applies smoothing filter to a specified image")]
+    [Command(Name = "image.applyfilter", Tooltip = "This command applies smoothing filter to a specified image")]
     public class ImageFilterCommand : Command
     {
         private readonly SmoothingFilterFactory smoothingFilterFactory = new SmoothingFilterFactory();
@@ -37,16 +38,15 @@ namespace G1ANT.Language.Images
         public void Execute(Arguments arguments)
         {
             var savingPath = arguments.OutputPath?.Value ?? arguments.Path.Value;
-            var savingPathArgumentName = arguments.OutputPath != null ? nameof(arguments.OutputPath) : nameof(arguments.Path);
+            var filter = Enum.TryParse(arguments.Filter.Value, out SmoothingFilter filterName) ? smoothingFilterFactory.GetSmoothingFilter(filterName) : throw new ArgumentException("Incorrect filter name");
 
-            SmoothingFilter filterName;
-            var filter = Enum.TryParse(arguments.Filter.Value, out filterName) ? smoothingFilterFactory.GetSmoothingFilter(filterName) : throw new ArgumentException("Incorrect filter name");
-
-            using (var image = Imaging.OpenImageFile(arguments.Path.Value, nameof(arguments.Path)))
+            using (var image = arguments.Path.OpenImage())
             {
-                var preprocessedImage = PreprocessImageBeforeFiltering(image);
-                filter.ApplyInPlace(preprocessedImage);
-                Imaging.SaveImageFile(preprocessedImage, savingPath, savingPathArgumentName);
+                using (var preprocessedImage = PreprocessImageBeforeFiltering(image))
+                {
+                    filter.ApplyInPlace(preprocessedImage);
+                    preprocessedImage.Save(savingPath);
+                }
             }
         }
 
@@ -55,17 +55,10 @@ namespace G1ANT.Language.Images
             if (image.PixelFormat == PixelFormat.Format24bppRgb)
                 return image;
 
-            try
-            {
-                if (image.PixelFormat == PixelFormat.Format16bppGrayScale || Image.GetPixelFormatSize(image.PixelFormat) > 32)
-                    throw new NotSupportedException("Unsupported image format");
+            if (image.PixelFormat == PixelFormat.Format16bppGrayScale || Image.GetPixelFormatSize(image.PixelFormat) > 32)
+                throw new NotSupportedException("Unsupported image format");
 
-                return AForge.Imaging.Image.Clone(image, PixelFormat.Format24bppRgb);
-            }
-            finally
-            {
-                image.Dispose();
-            }
+            return AForge.Imaging.Image.Clone(image, PixelFormat.Format24bppRgb);
         }
     }
 }

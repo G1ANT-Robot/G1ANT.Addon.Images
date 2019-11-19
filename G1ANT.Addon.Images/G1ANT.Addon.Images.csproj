@@ -78,7 +78,7 @@
     <Compile Include="Api\MatrixTransform.cs" />
     <Compile Include="Commands\ImageExpectedCommand.cs" />
     <Compile Include="Commands\ImageSharpenCommand.cs" />
-    <Compile Include="Commands\ImageFilterCommand.cs" />
+    <Compile Include="Commands\ImageSmoothingFilterCommand.cs" />
     <Compile Include="Commands\ImageFindCommand.cs" />
     <Compile Include="Commands\ImageFindRectanglesCommand.cs" />
     <Compile Include="Enums\SmoothingFilterEnum.cs" />

@@ -18,6 +18,7 @@ namespace G1ANT.Language.Images
     [Command(Name = "image.smoothingfilter", Tooltip = "This command applies smoothing filter to a specified image")]
     public class ImageFilterCommand : Command
     {
+        private readonly SmoothingFilterFactory smoothingFilterFactory = new SmoothingFilterFactory();
         public class Arguments : CommandArguments
         {
             [Argument(Required = true, Tooltip = "Filter name")]
@@ -39,7 +40,7 @@ namespace G1ANT.Language.Images
             var savingPathArgumentName = arguments.OutputPath != null ? nameof(arguments.OutputPath) : nameof(arguments.Path);
 
             SmoothingFilter filterName;
-            var filter = Enum.TryParse(arguments.Filter.Value, out filterName) ? new SmoothingFilterFactory().GetSmoothingFilter(filterName) : throw new ArgumentException("Incorrect filter name");
+            var filter = Enum.TryParse(arguments.Filter.Value, out filterName) ? smoothingFilterFactory.GetSmoothingFilter(filterName) : throw new ArgumentException("Incorrect filter name");
 
             using (var image = Imaging.OpenImageFile(arguments.Path.Value, nameof(arguments.Path)))
             {

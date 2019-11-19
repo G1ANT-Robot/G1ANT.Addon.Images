@@ -45,8 +45,8 @@
     <Reference Include="BouncyCastle.Crypto, Version=1.8.4.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
       <HintPath>..\packages\BouncyCastle.1.8.4\lib\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
-    <Reference Include="G1ANT.Language, Version=4.101.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\G1ANT.Language.4.101.0\lib\net452\G1ANT.Language.dll</HintPath>
+    <Reference Include="G1ANT.Language, Version=4.104.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\G1ANT.Language.4.104.0\lib\net452\G1ANT.Language.dll</HintPath>
     </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.6.11.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\packages\HtmlAgilityPack.1.6.11\lib\Net45\HtmlAgilityPack.dll</HintPath>
@@ -73,9 +73,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Api\AForgeWrapper.cs" />
-    <Compile Include="Api\Imaging.cs" />
-    <Compile Include="Api\MatrixTransform.cs" />
     <Compile Include="Commands\ImageExpectedCommand.cs" />
     <Compile Include="Commands\ImageSharpenCommand.cs" />
     <Compile Include="Commands\ImageSmoothingFilterCommand.cs" />
@@ -83,6 +80,8 @@
     <Compile Include="Commands\ImageFindRectanglesCommand.cs" />
     <Compile Include="Enums\SmoothingFilterEnum.cs" />
     <Compile Include="Factories\SmoothingFilterFactory.cs" />
+    <Compile Include="Extensions\ImageExtensions.cs" />
+    <Compile Include="Extensions\RectangeExtensions.cs" />
     <Compile Include="Variables\TimeoutImageExpectedVariable.cs" />
     <Compile Include="Variables\TimeoutImageFindVariable.cs" />
     <Compile Include="Commands\WaitForImageCommand.cs" />
@@ -114,9 +113,6 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\image22.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="License.txt" />

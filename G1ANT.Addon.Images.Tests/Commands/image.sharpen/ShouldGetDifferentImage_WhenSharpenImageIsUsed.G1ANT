@@ -9,7 +9,7 @@ file.download https://jeremykun.files.wordpress.com/2012/01/img49.png filename �
 image.sharpen path ♥imageInputFile outputpath ♥imageOutputFile
 program mspaint.exe arguments ♥imageOutputFile
 delay milliseconds 300
-image.find ♥imageInputFile result ♥point relative false errorjump errorHandling
+image.find ♥imageInputFile result ♥point relative true screensearcharea 0⫽0⫽500⫽500 errorjump errorHandling
 error ‴image.sharpen has not changed image‴
 label errorHandling
 keyboard window ♥activeWindow text ⋘ALT+F4⋙

@@ -75,8 +75,11 @@
   <ItemGroup>
     <Compile Include="Commands\ImageExpectedCommand.cs" />
     <Compile Include="Commands\ImageSharpenCommand.cs" />
+    <Compile Include="Commands\ImageSmoothingFilterCommand.cs" />
     <Compile Include="Commands\ImageFindCommand.cs" />
     <Compile Include="Commands\ImageFindRectanglesCommand.cs" />
+    <Compile Include="Enums\SmoothingFilterEnum.cs" />
+    <Compile Include="Factories\SmoothingFilterFactory.cs" />
     <Compile Include="Extensions\ImageExtensions.cs" />
     <Compile Include="Extensions\RectangeExtensions.cs" />
     <Compile Include="Variables\TimeoutImageExpectedVariable.cs" />
@@ -114,5 +117,6 @@
   <ItemGroup>
     <EmbeddedResource Include="License.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

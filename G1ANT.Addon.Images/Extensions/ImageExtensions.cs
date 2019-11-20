@@ -99,6 +99,6 @@ namespace G1ANT.Addon.Images
             {
                 throw new Exception($"Could not find the rectangle. Message: {ex.Message}", ex);
             }
-        }    
+        }
     }
 }

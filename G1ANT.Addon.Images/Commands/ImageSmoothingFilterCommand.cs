@@ -1,6 +1,6 @@
 /**
-*    Copyright(C) G1ANT Ltd, All rights reserved
-*    Solution G1ANT.Addon, Project G1ANT.Addon.Images
+*    Copyright(C) G1ANT Robot Ltd, All rights reserved
+*    Solution G1ANT.Addon.Images, Project G1ANT.Addon.Images
 *    www.g1ant.com
 *
 *    Licensed under the G1ANT license.
@@ -22,7 +22,7 @@ namespace G1ANT.Language.Images
         private readonly SmoothingFilterFactory smoothingFilterFactory = new SmoothingFilterFactory();
         public class Arguments : CommandArguments
         {
-            [Argument(Required = true, Tooltip = "Filter name")]
+            [Argument(Required = true, Tooltip = "Filter name. Possible values: Mean, Median, ConservativeSmoothing, BilateralSmoothing, AdaptiveSmoothing")]
             public TextStructure Filter { get; set; }
 
             [Argument(Required = true, Tooltip = "Path to an image")]
@@ -42,23 +42,9 @@ namespace G1ANT.Language.Images
 
             using (var image = arguments.Path.OpenImage())
             {
-                using (var preprocessedImage = PreprocessImageBeforeFiltering(image))
-                {
-                    filter.ApplyInPlace(preprocessedImage);
-                    preprocessedImage.Save(savingPath);
-                }
+                filter.ApplyInPlace(image);
+                image.Save(savingPath);
             }
-        }
-
-        private Bitmap PreprocessImageBeforeFiltering(Bitmap image)
-        {
-            if (image.PixelFormat == PixelFormat.Format24bppRgb)
-                return image;
-
-            if (image.PixelFormat == PixelFormat.Format16bppGrayScale || Image.GetPixelFormatSize(image.PixelFormat) > 32)
-                throw new NotSupportedException("Unsupported image format");
-
-            return AForge.Imaging.Image.Clone(image, PixelFormat.Format24bppRgb);
         }
     }
 }

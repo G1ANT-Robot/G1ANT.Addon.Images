@@ -9,7 +9,7 @@ namespace G1ANT.Addon.Images.Factories
         public BaseUsingCopyPartialFilter GetSmoothingFilter(string filterName)
         {
             if (Enum.TryParse(filterName, true, out SmoothingFilter filter))
-                {
+            {
                 switch (filter)
                 {
                     case SmoothingFilter.Mean:

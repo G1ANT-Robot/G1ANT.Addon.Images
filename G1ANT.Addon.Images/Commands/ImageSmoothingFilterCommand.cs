@@ -7,11 +7,7 @@
 *    See License.txt file in the project root for full license information.
 *
 */
-using System;
-using System.Drawing;
-using System.Drawing.Imaging;
 using G1ANT.Addon.Images;
-using G1ANT.Addon.Images.Enums;
 using G1ANT.Addon.Images.Factories;
 
 namespace G1ANT.Language.Images

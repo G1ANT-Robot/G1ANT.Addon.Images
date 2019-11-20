@@ -38,7 +38,7 @@ namespace G1ANT.Language.Images
         public void Execute(Arguments arguments)
         {
             var savingPath = arguments.OutputPath?.Value ?? arguments.Path.Value;
-            var filter = Enum.TryParse(arguments.Filter.Value, out SmoothingFilter filterName) ? smoothingFilterFactory.GetSmoothingFilter(filterName) : throw new ArgumentException("Incorrect filter name");
+            var filter = smoothingFilterFactory.GetSmoothingFilter(arguments.Filter.Value);
 
             using (var image = arguments.Path.OpenImage())
             {

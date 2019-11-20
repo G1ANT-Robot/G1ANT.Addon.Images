@@ -6,22 +6,29 @@ namespace G1ANT.Addon.Images.Factories
 {
     public class SmoothingFilterFactory
     {
-        public BaseUsingCopyPartialFilter GetSmoothingFilter (SmoothingFilter filter)
+        public BaseUsingCopyPartialFilter GetSmoothingFilter(string filterName)
         {
-            switch(filter)
+            if (Enum.TryParse(filterName, true, out SmoothingFilter filter))
+                {
+                switch (filter)
+                {
+                    case SmoothingFilter.Mean:
+                        return new Mean();
+                    case SmoothingFilter.Median:
+                        return new Median();
+                    case SmoothingFilter.ConservativeSmoothing:
+                        return new ConservativeSmoothing();
+                    case SmoothingFilter.BilateralSmoothing:
+                        return new BilateralSmoothing();
+                    case SmoothingFilter.AdaptiveSmoothing:
+                        return new AdaptiveSmoothing();
+                    default:
+                        throw new Exception("Filter not implemented");
+                }
+            }
+            else
             {
-                case SmoothingFilter.Mean:
-                    return new Mean();
-                case SmoothingFilter.Median:
-                    return new Median();
-                case SmoothingFilter.ConservativeSmoothing:
-                    return new ConservativeSmoothing();
-                case SmoothingFilter.BilateralSmoothing:
-                    return new BilateralSmoothing();
-                case SmoothingFilter.AdaptiveSmoothing:
-                    return new AdaptiveSmoothing();
-                default:
-                    throw new ArgumentException("Incorrect filter name");
+                throw new ArgumentException("Incorrect filter name");
             }
         }
     }

@@ -5,7 +5,7 @@
 file.download https://jeremykun.files.wordpress.com/2012/01/img49.png filename ♥imageFile
 program mspaint.exe arguments ♥imageFile
 delay milliseconds 300
-image.find ♥imageFile result ♥point relative false
+image.find ♥imageFile result ♥point relative true threshold 0.1 screensearcharea 0⫽0⫽500⫽500
 keyboard window ♥activeWindow text ⋘ALT+F4⋙
 file.delete ♥imageFile
 test ⊂♥point != null⊃

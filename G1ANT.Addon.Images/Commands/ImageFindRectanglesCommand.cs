@@ -8,12 +8,9 @@
 *
 */
 using G1ANT.Language;
-using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
+using System.Linq;
 
-namespace G1ANT.Language.Images
+namespace G1ANT.Addon.Images
 {
     [Command(Name = "image.findrectangles", Tooltip = "This command finds objects separated by a black background in a specified image and returns a list of their coordinates, width and height")]
     public class ImageFindRectanglesCommand : Command
@@ -40,37 +37,21 @@ namespace G1ANT.Language.Images
 
             [Argument(Tooltip = "Maximal height of an image area to be processed")]
             public IntegerStructure MaxHeight { get; set; }
-
-             
         }
-        public ImageFindRectanglesCommand(AbstractScripter scripter) : base(scripter)
-        { }
+
+        public ImageFindRectanglesCommand(AbstractScripter scripter) : base(scripter) { }
+
         public void Execute(Arguments arguments)
         {
-            try
+            using (var image = arguments.Path.OpenImage())
             {
-                List<System.Drawing.Rectangle> foundRectangles = new List<System.Drawing.Rectangle>();
-                using (Bitmap image = (Bitmap)Image.FromFile(arguments.Path.Value))
-                {
-                    foundRectangles = AForgeWrapper.FindRectangles(
-                        image,
-                        arguments.Invert.Value,
-                        arguments.MinWidth?.Value,
-                        arguments.MaxWidth?.Value,
-                        arguments.MinHeight?.Value,
-                        arguments.MaxHeight?.Value);
-                }                   
+                var foundRectangles = image
+                    .FindRectangles(arguments.Invert)
+                    .FitInBound(image.Size, arguments.MinWidth, arguments.MaxWidth, arguments.MinHeight, arguments.MaxHeight)
+                    .Select(r => new RectangleStructure(r))
+                    .ToList();
 
-                List<Structure> results = new List<Structure>();
-                foreach (var foundRectangle in foundRectangles)
-                {
-                    results.Add(new RectangleStructure(foundRectangle));
-                }
-                Scripter.Variables.SetVariableValue(arguments.Result.Value, new ListStructure(results));
-            }
-            catch (Exception ex)
-            {               
-                throw new ApplicationException($"Specified directory doesn't exist. Message: {ex.Message}", ex);
+                Scripter.Variables.SetVariableValue(arguments.Result.Value, new ListStructure(foundRectangles));
             }
         }
     }
